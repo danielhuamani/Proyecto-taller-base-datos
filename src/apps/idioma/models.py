@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from .constants import CHOICES_NIVEL
-
+from .constants import CHOICES_NIVEL, CHOICES_IDIOMAS
 
 # Create your models here. #
 class Idioma(models.Model):

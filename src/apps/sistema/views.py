@@ -1,27 +1,27 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime
+# SQL #
+from django.db import connection
 from logging import getLogger
-
+from django.utils import timezone
 from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import logout_then_login
-from django.core.urlresolvers import reverse, reverse_lazy
+from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
-from django.shortcuts import render_to_response as render, redirect
+from django.shortcuts import render, redirect
 from django.template import RequestContext as ctx
 
-from .forms import (LoginForm, RegistroForm, RecuperaPasswordForm,
-    SetPasswordForm)
+from .forms import (LoginForm,)
 from .models import Usuario
 
 log = getLogger('django')
 
 
-def home_prueba(request):
+def bienvenido(request):
     prueba = "texdasdsato"
-    return render('home.html', locals(),
-        context_instance=ctx(request))
+
+    return render(request, 'sistema/bienvenido.html', locals())
 
 
 # def registro(request):
@@ -50,26 +50,26 @@ def home_prueba(request):
 
 def login_view(request):
     log.info('VIEW: login_view')
-
+    # query_usuario = Usuario.objects.raw("Select * From sistema_usuario where id = %s", [1])
+    # for query in query_usuario:
+    #     print "--------------"
+    #     print query.email
+    #     print query.password
     # if request.user.is_authenticated():
     #     return redirect(reverse('sistema:logged_view'))
-
+    # cursor = connection.cursor()
+    # cursor.execute("Select * From sistema_usuario")
+    # print cursor.fechone()
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
             user = form.auth()
             if user is not None:
                 if user.is_active:
-                    user.last_login = datetime.now()
+                    user.last_login = timezone.now()
                     user.save()
                     login(request, user)
-
-                    location = request.GET.get('next', None)
-
-                    if location:
-                        return redirect(location)
-
-                    return redirect(reverse('auth:logged_view'))
+                    return redirect(reverse('sistema:bienvenido'))
                 else:
                     messages.add_message(request, messages.WARNING,
                         'El usuario no se encuentra activo')
@@ -81,12 +81,11 @@ def login_view(request):
     else:
         form = LoginForm()
 
-    return render('sistema/login.html', locals(),
-        context_instance=ctx(request))
+    return render(request, 'sistema/login.html', locals())
 
 
-# def logout(request):
-#     return logout_then_login(request, reverse('auth:login'))
+def salir(request):
+    return logout_then_login(request, reverse('sistema:login_view'))
 
 
 # def set_password(request, uuid_hash):

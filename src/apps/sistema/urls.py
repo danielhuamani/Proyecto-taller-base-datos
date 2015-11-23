@@ -1,9 +1,10 @@
 from django.conf.urls import patterns, url
+from . import views
 
-
-urlpatterns = patterns('apps.sistema.views',
-    url(r'^ingresar/$', 'login_view', name='login_view'),
-    # url(r'^salir/$', 'logout', name='logout'),
+urlpatterns = [
+    url(r'^ingresar/$', views.login_view, name='login_view'),
+    url(r'^bienvenido/$', views.bienvenido, name='bienvenido'),
+    url(r'^salir/$', views.salir, name='salir'),
     # url(r'^registro/$', 'registro', name='registro'),
 
     # # RECUPERAR PASSWORD
@@ -14,4 +15,4 @@ urlpatterns = patterns('apps.sistema.views',
     # # PRIVATE VIEWS
     # url(r'^auth/$', 'logged_view', name='logged_view')
     # url(r'^login/$', 'home_prueba', name='ingresar'),
-)
+]

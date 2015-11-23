@@ -11,8 +11,8 @@ ENV = get_env(BASE_DIR)
 DEBUG = True
 SECRET_KEY = 'my-dev-secret-key'
 AUTH_SECRET_KEY = 'my-auth-secret-key'
-CONN_MAX_AGE = 5 * 60  # 5 minutos
-TOS_AUTH_SALT = 'demo'
+# CONN_MAX_AGE = 5 * 60  # 5 minutos
+# TOS_AUTH_SALT = 'demo'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.oracle',
@@ -64,8 +64,11 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
+                'django.core.context_processors.media',
+                'django.core.context_processors.static',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.core.context_processors.request'
             ],
         },
     },
@@ -75,7 +78,7 @@ WSGI_APPLICATION = 'wsgi.application'
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-    'apps.sistema.backend.AuthBackend'
+    'apps.sistema.backend.AuthBackend',
 )
 
 # Internationalization

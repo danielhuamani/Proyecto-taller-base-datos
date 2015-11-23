@@ -44,7 +44,7 @@ class Usuario(models.Model):
         super(Usuario, self).save(*args, **kwargs)
 
     def is_password_valid(self, password):
-        return is_password_valid(password, self.password)
+        return validad_password(password, self.password)
 
     def is_authenticated(self):
         return True
@@ -60,6 +60,6 @@ def encrypt_password(password):
     return crypt(password, SALT, NUMERO_DE_ITERACIONES)
 
 
-def is_password_valid(password, encoded):
+def validad_password(password, encoded):
     ''' Contrasta la contraseña brindada con el valor encriptado '''
     return encrypt_password(password) == encoded

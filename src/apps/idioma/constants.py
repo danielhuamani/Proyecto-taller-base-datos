@@ -10,3 +10,12 @@ CHOICES_NIVEL = (
     (INTERMEDIO, "Intermedio"),
     (AVANZADO, "Avanzado"),
     )
+
+
+CHOICES_IDIOMAS = (
+    ("EN", 'Inglés'),
+    ("IT", 'Italiano'),
+    ("PR", 'Portugués'),
+    ("JP", 'Japones'),
+    ("FR", 'Francés'),
+    )

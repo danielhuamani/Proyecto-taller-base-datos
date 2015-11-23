@@ -20,7 +20,7 @@ class LoginForm(forms.Form):
     ''' Formulario de acceso al sistema '''
     username = forms.EmailField(label='Email')
     username.widget.attrs.update({'autofocus': 'true', 'tabindex': '1'})
-    password = forms.CharField(label='Contraseña', min_length=7,
+    password = forms.CharField(label='Contraseña', min_length=6,
         max_length=32, widget=forms.PasswordInput)
     password.widget.attrs.update({'tabindex': '2'})
 

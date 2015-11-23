@@ -17,13 +17,15 @@
               <tr>
                 <th>N°</th>
                 <th>Nombres</th>
+                <th>Modficar</th>
               </tr>
             </thead>
               <tbody class="listado_idioma">
               {% for idioma in idiomas %}
-                <tr role="row" class="odd">
+                <tr role="row" class="odd" >
                   <td class="sorting_1">{{forloop.counter}}</td>
-                  <td><a href="#">{{idioma.nombre}}</a></td>
+                  <td>{{idioma.nombre}}</td>
+                  <td><button type="button" class="btn btn-primary">Modificar</button></td>
                 </tr>
                {% endfor %}
               </tbody>
@@ -52,7 +54,7 @@
     <!-- SlimScroll -->
     <script src="{{STATIC_URL}}plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
     <!-- FastClick -->
-    <script src='{{STATIC_URL}}plugins/fastclick/fastclick.min.js'></script>
+
     <script src='{{STATIC_URL}}js/jquery_formset.js'></script>
      <script src='{{STATIC_URL}}js/cookies.js'></script>
     <!-- AdminLTE App -->
@@ -64,18 +66,17 @@
             /* Act on the event */
             event.preventDefault()
             var contador_formulario = $(".formulario_inicial").length + 1
-            html = '<div class="formulario_inicial form-group"><label for="">Nombre del Idioma</label><input type="text" class="idioma_nombre" name="idioma"></div>'
+            html = '<div class="formulario_inicial form-group"><label for="">Nombre del Idioma </label> <input type="text" class="idioma_nombre" name="idioma"></div>'
             $(".cnt-formulario").append(html)
+
         });
         $("#guarda_idioma").click(function(event) {
             /* Act on the event */
             var arreglo_idiomas = new Array()
+            var contador_listado = $(".listado_idioma tr").length
             $(".idioma_nombre").each(function(index, el) {
                 arreglo_idiomas.push($(this).val())
             });
-            console.log(JSON.stringify(arreglo_idiomas))
-            var frmdata = $("#form_idioma").serialize()
-            console.log(frmdata)
             $.ajax({
                 url: '{% url "idioma:api_idioma_agregar" %}',
                 type: 'POST',
@@ -83,7 +84,17 @@
 
             })
             .done(function(data) {
-                console.log(data);
+                if (data.status == "ok"){
+                    $(".formulario_inicial").fadeOut('500', function() {
+                        $(this).remove()
+                    });
+                    $.each(arreglo_idiomas, function(index, val) {
+                         /* iterate through array or object */
+                        contador_listado = contador_listado + 1
+                        html = '<tr role="row" class="odd" ><td class="sorting_1">'+contador_listado+'</td><td>'+val+'</td><td><button type="button" class="btn btn-primary">Modificar</button></td></tr>'
+                        $(".listado_idioma").append(html)
+                    });
+                }
             })
 
 

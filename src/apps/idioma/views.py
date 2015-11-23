@@ -9,19 +9,16 @@ import json
 
 
 def idioma_listado(request):
-    idiomas = Idioma.objects.all()
-    IdiomaFormset = formset_factory(IdiomaForm, extra=1, min_num=0, can_delete=True)
-    if request.method == "POST":
-        form = IdiomaFormset(request.POST)
-        if form.is_valid():
-            form.save()
-    else:
-        form = IdiomaFormset()
+    idiomas = Idioma.objects.all().order_by("nombre")
     # cursor = connection.cursor()
     # cursor.execute("Select * From idioma_idioma")
     # for nue in idiomas:
     #     print nue
     return render(request, "idioma/idioma_listado.html", locals())
+
+
+def idioma_nivel_listado(request):
+    return render(request, "idioma/idioma_nivel_listado.html", locals())
 
 
 def api_idioma_agregar(request):
@@ -31,7 +28,8 @@ def api_idioma_agregar(request):
         if request.method == "POST":
             listado_idioma = []
             for idioma in json.loads(request.POST.get("idioma")):
-                listado_idioma.append(Idioma(nombre=idioma))
+                if idioma:
+                    listado_idioma.append(Idioma(nombre=idioma))
             Idioma.objects.bulk_create(listado_idioma)
     else:
         data = {"status": "error no ajax"}

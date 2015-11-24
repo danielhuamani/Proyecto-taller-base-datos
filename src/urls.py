@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
@@ -14,7 +14,8 @@ urlpatterns = [
     # WEB
     url(r'', include('apps.sistema.urls', namespace="sistema")),
     url(r'^idioma/', include('apps.idioma.urls', namespace="idioma")),
-]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    url(r'^programacion/', include('apps.programacion.urls', namespace="programacion")),
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 handler404 = 'apps.web.views.page_404'
 handler500 = 'apps.web.views.page_500'

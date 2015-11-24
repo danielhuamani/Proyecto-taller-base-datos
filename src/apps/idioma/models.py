@@ -28,6 +28,7 @@ class NivelIdioma(models.Model):
 
 class CicloIdioma(models.Model):
     nivel_idioma = models.ForeignKey(NivelIdioma, related_name='nivel_idioma_ciclo')
+    idioma = models.ForeignKey(Idioma, related_name='idioma_ciclo_idioma')
     nombre = models.CharField("Nombre", max_length=2)
 
     class Meta:

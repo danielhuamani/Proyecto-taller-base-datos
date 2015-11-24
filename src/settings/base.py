@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'apps.sistema',
     'apps.idioma',
     'apps.alumno_profesor',
+    'apps.programacion',
     # 'apps.miembros',
 
 )

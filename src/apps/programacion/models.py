@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.db import models
 from apps.idioma.models import Idioma, CicloIdioma
 # # Create your models here.
@@ -38,15 +39,15 @@ class Periodo(models.Model):
         return "Fechas"
 
 
-class Programacion(models.Model):
-    idioma = models.ForeignKey(Idioma, related_name='idioma_programacion')
-    aula = models.ForeignKey(Aula, related_name='aula_programacion')
-    periodo = models.ForeignKey(Periodo, related_name='periodo_programacion')
-    ciclo_idioma = models.ForeignKey(CicloIdioma, related_name='ciclo_idioma_programacion')
+# class Programacion(models.Model):
+#     idioma = models.ForeignKey(Idioma, related_name='idioma_programacion')
+#     aula = models.ForeignKey(Aula, related_name='aula_programacion')
+#     periodo = models.ForeignKey(Periodo, related_name='periodo_programacion')
+#     ciclo_idioma = models.ForeignKey(CicloIdioma, related_name='ciclo_idioma_programacion')
 
-    class Meta:
-        verbose_name = "Programacion"
-        verbose_name_plural = "Programacions"
+#     class Meta:
+#         verbose_name = "Programacion"
+#         verbose_name_plural = "Programacions"
 
-    def __str__(self):
-        pass
+#     def __str__(self):
+#         pass

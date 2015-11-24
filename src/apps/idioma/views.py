@@ -8,10 +8,10 @@ import json
 
 def idioma_listado(request):
     idiomas = Idioma.objects.all().order_by("nombre")
-    # cursor = connection.cursor()
-    # cursor.execute("Select * From idioma_idioma")
-    # for nue in idiomas:
-    #     print nue
+    cursor = connection.cursor()
+    cursor.execute("Select * From idioma_idioma")
+    for nue in cursor:
+        print nue
     return render(request, "idioma/idioma_listado.html", locals())
 
 

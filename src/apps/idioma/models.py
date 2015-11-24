@@ -2,6 +2,7 @@
 from django.db import models
 from .constants import CHOICES_NIVEL, CHOICES_IDIOMAS
 
+
 # Create your models here. #
 class Idioma(models.Model):
     nombre = models.CharField("Nombre del idioma", max_length=120)

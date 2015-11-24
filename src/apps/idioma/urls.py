@@ -6,6 +6,9 @@ urlpatterns = [
     url(r'^idioma-nivel-listado/$', views.idioma_nivel_listado, name='idioma_nivel_listado'),
     url(r'^api-idioma-agregar/$', views.api_idioma_agregar, name='api_idioma_agregar'),
     url(r'^api-idioma-actualizar/$', views.api_idioma_actualizar, name='api_idioma_actualizar'),
+    url(r'^api-nivel-idioma-agregar/$', views.api_nivel_idioma_agregar, name='api_nivel_idioma_agregar'),
+    url(r'^api-nivel-idioma-agregar/$', views.api_nivel_idioma_agregar, name='api_nivel_idioma_agregar'),
+    url(r'^api-nivel-idioma-actualizar/$', views.api_nivel_idioma_actualizar, name='api_nivel_idioma_actualizar'),
     # url(r'^registro/$', 'registro', name='registro'),
 
     # # RECUPERAR PASSWORD

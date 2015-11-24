@@ -1,7 +1,5 @@
 from django.shortcuts import render
-from .models import Idioma
-from .forms import IdiomaForm
-from django.forms import formset_factory
+from .models import Idioma, NivelIdioma
 from django.db import connection
 from django.http import JsonResponse
 import json
@@ -18,6 +16,7 @@ def idioma_listado(request):
 
 
 def idioma_nivel_listado(request):
+    nivel_idiomas = NivelIdioma.objects.all().order_by("nombre")
     return render(request, "idioma/idioma_nivel_listado.html", locals())
 
 
@@ -51,6 +50,42 @@ def api_idioma_actualizar(request):
             guardado_idioma = Idioma.objects.get(id=request.POST.get("idioma_pk"))
             guardado_idioma.nombre = request.POST.get("idioma_nombre")
             guardado_idioma.save()
+            data = {'status': 'ok'}
+    else:
+        data = {"status": "error"}
+    return JsonResponse(data)
+
+
+def api_nivel_idioma_agregar(request):
+
+    if request.is_ajax():
+        if request.method == "POST":
+            listado_idioma = []
+            for idioma in json.loads(request.POST.get("idioma")):
+                guardado_nivel_idioma = NivelIdioma(nombre=idioma)
+            #     if idioma:
+            #         listado_idioma.append(Idioma(nombre=idioma))
+            # guardado_nivel_idioma = Idioma.objecdots.bulk_create(listado_idioma)
+                guardado_nivel_idioma.save()
+                listado = {}
+                listado['nombre'] = guardado_nivel_idioma.nombre
+                listado['id'] = guardado_nivel_idioma.id
+                listado_idioma.append(listado)
+            data = {
+                'listado': listado_idioma,
+            }
+    else:
+        data = {"status": "error"}
+    return JsonResponse(data)
+
+
+def api_nivel_idioma_actualizar(request):
+
+    if request.is_ajax():
+        if request.method == "POST":
+            guardado_nivel_idioma = NivelIdioma.objects.get(id=request.POST.get("idioma_pk"))
+            guardado_nivel_idioma.nombre = request.POST.get("idioma_nombre")
+            guardado_nivel_idioma.save()
             data = {'status': 'ok'}
     else:
         data = {"status": "error"}

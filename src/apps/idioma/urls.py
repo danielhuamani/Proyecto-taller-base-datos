@@ -3,7 +3,9 @@ from . import views
 
 urlpatterns = [
     url(r'^idioma-listado/$', views.idioma_listado, name='idioma_listado'),
+    url(r'^idioma-nivel-listado/$', views.idioma_nivel_listado, name='idioma_nivel_listado'),
     url(r'^api-idioma-agregar/$', views.api_idioma_agregar, name='api_idioma_agregar'),
+    url(r'^api-idioma-actualizar/$', views.api_idioma_actualizar, name='api_idioma_actualizar'),
     # url(r'^registro/$', 'registro', name='registro'),
 
     # # RECUPERAR PASSWORD

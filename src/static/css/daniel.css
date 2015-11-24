@@ -58,3 +58,23 @@
   height: 30px;
   z-index: 2;
 }
+.guardar_none{
+  display: none;
+}
+.guardar_block{
+  .display: block;
+}
+.actualizo_correctamente{
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  font-size: 15px;
+  padding: 15px 30px;
+  opacity: 0;
+  z-index: 9999;
+  transition:0.5s ease all;
+}
+
+.actualizo_fade{
+  opacity: 1 !important;
+}

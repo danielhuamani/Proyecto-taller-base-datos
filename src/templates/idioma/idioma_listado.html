@@ -8,7 +8,9 @@
 <div class="row">
   <div class="col-xs-12">
    <div class="box box-primary">
-
+    <div class="actualizo_correctamente alert alert-success">
+        Se actualizo correctamente el idioma
+    </div>
     <div class="box-body">
 
       <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
@@ -17,19 +19,19 @@
               <tr>
                 <th>N°</th>
                 <th>Nombres</th>
-                <th>Modficar</th>
+                <th>Modficar / Guardar</th>
               </tr>
             </thead>
               <tbody class="listado_idioma">
               {% for idioma in idiomas %}
-                <tr role="row" class="odd" >
+                <tr role="row" class="odd row-fila" >
                   <td class="sorting_1">{{forloop.counter}}</td>
-                  <td>{{idioma.nombre}}</td>
-                  <td><button type="button" class="btn btn-primary">Modificar</button></td>
+                  <td class="nombre_idioma"><h5>{{idioma.nombre}}</h5><input type="hidden" data-pk="{{idioma.pk}}" class="input_modificar"></td>
+                  <td><button type="button" class="btn btn-primary modficar_idioma">Modificar</button><button type="button" class="btn btn-success guardar_idioma guardar_none">Guardar</button>
+                  </td>
                 </tr>
                {% endfor %}
               </tbody>
-
               </table>
       </div>
       <div class="btn-group mb_20">
@@ -84,26 +86,62 @@
 
             })
             .done(function(data) {
-                if (data.status == "ok"){
+                console.log(data)
+                if (data!='error'){
                     $(".formulario_inicial").fadeOut('500', function() {
                         $(this).remove()
                     });
-                    $.each(arreglo_idiomas, function(index, val) {
+                    $.each(data.listado, function(index, val) {
                          /* iterate through array or object */
                         contador_listado = contador_listado + 1
-                        html = '<tr role="row" class="odd" ><td class="sorting_1">'+contador_listado+'</td><td>'+val+'</td><td><button type="button" class="btn btn-primary">Modificar</button></td></tr>'
+                        html = '<tr role="row" class="odd row-fila" ><td class="sorting_1">'+contador_listado+'</td><td class="nombre_idioma"><h5>'+val.nombre+'</h5><input type="hidden" data-pk="'+val.id+'" class="input_modificar"></td><td><button type="button" class="btn btn-primary modficar_idioma">Modificar</button><button type="button" class="btn btn-success guardar_idioma guardar_none">Guardar</button></td></tr>'
                         $(".listado_idioma").append(html)
                     });
                 }
             })
-
-
         });
-       // $(".formulario_inicial").formset({
-       //  prefix: "{{form.prefix}}",
-       //  deleteText: "Eliminar",
-       //  addCssClass:"Agregar idioma"
-       // })
+        $("body").on('click', '.modficar_idioma', function(event) {
+            /* Act on the event */
+            event.preventDefault()
+            var padre_fila = $(this).closest('.row-fila')
+            var texto = padre_fila.find('.nombre_idioma h5').text()
+            padre_fila.find('.input_modificar').val(texto);
+            padre_fila.find('.input_modificar').attr('type', 'text');
+            padre_fila.find('.nombre_idioma h5').text("")
+            padre_fila.find('.guardar_idioma').removeClass('guardar_none').addClass('guardar_block')
+            padre_fila.find('.modficar_idioma').addClass('guardar_none')
+        });
+        $("body").on('click', '.guardar_idioma  ', function(event) {
+            event.preventDefault();
+            var padre_fila = $(this).closest('.row-fila')
+            var pk = padre_fila.find('.input_modificar').attr('data-pk');
+            var texto = padre_fila.find('.input_modificar').val()
+            if (texto) {
+                $.ajax({
+                    url: '{% url "idioma:api_idioma_actualizar" %}',
+                    type: 'POST',
+                    data: {
+                        'idioma_pk': pk,
+                        'idioma_nombre': texto
+                    },
+                })
+                .done(function(data) {
+                    if (data.status == "ok") {
+                        $(".actualizo_correctamente").addClass('actualizo_fade')
+                        padre_fila.find('.nombre_idioma h5').text(texto)
+                        padre_fila.find('.input_modificar').attr('type', 'hidden');
+                        padre_fila.find('.guardar_idioma').removeClass('guardar_block').addClass('guardar_none')
+                        padre_fila.find('.modficar_idioma').removeClass('guardar_none')
+                        setTimeout(function(){
+                          $(".actualizo_correctamente").removeClass('actualizo_fade')
+                        }, 2000);
+                    }
+                })
+            };
+
+
+            /* Act on the event */
+        });
       });
     </script>
 {% endblock javascript %}

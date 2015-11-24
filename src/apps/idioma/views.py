@@ -24,13 +24,34 @@ def idioma_nivel_listado(request):
 def api_idioma_agregar(request):
 
     if request.is_ajax():
-        data = {"status": "ok"}
         if request.method == "POST":
             listado_idioma = []
             for idioma in json.loads(request.POST.get("idioma")):
-                if idioma:
-                    listado_idioma.append(Idioma(nombre=idioma))
-            Idioma.objects.bulk_create(listado_idioma)
+                guardado_idioma = Idioma(nombre=idioma)
+            #     if idioma:
+            #         listado_idioma.append(Idioma(nombre=idioma))
+            # guardado_idioma = Idioma.objecdots.bulk_create(listado_idioma)
+                guardado_idioma.save()
+                listado = {}
+                listado['nombre'] = guardado_idioma.nombre
+                listado['id'] = guardado_idioma.id
+                listado_idioma.append(listado)
+            data = {
+                'listado': listado_idioma,
+            }
     else:
-        data = {"status": "error no ajax"}
+        data = {"status": "error"}
+    return JsonResponse(data)
+
+
+def api_idioma_actualizar(request):
+
+    if request.is_ajax():
+        if request.method == "POST":
+            guardado_idioma = Idioma.objects.get(id=request.POST.get("idioma_pk"))
+            guardado_idioma.nombre = request.POST.get("idioma_nombre")
+            guardado_idioma.save()
+            data = {'status': 'ok'}
+    else:
+        data = {"status": "error"}
     return JsonResponse(data)

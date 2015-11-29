@@ -23,7 +23,10 @@ DATABASES = {
         'PORT': '1521',
     }
 }
-
+GRAPH_MODELS = {
+  'all_applications': True,
+  'group_models': True,
+}
 # Application definition
 
 INSTALLED_APPS = (

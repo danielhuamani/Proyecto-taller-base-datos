@@ -1,0 +1,114 @@
+{% extends 'common/base.html' %}
+{% block content %}
+
+<div class="row">
+  <div class="col-xs-12">
+    <div class="box box-primary">
+      <div class="box-header">
+        <h3 class="box-title">
+            CICLO DE IDIOMAS
+          </h3>
+      </div>
+        <div class="box-body">
+            <div class="btn-group mb_20">
+              <form action="#" method="GET">
+              <select name="pcantidad" class="float-left" id="paginador">
+                <option value="2" {% if pagina_cantidad == "2" %}selected{% endif %}>2</option>
+                <option value="25" {% if pagina_cantidad == "25" %}selected{% endif %}>25</option>
+                <option value="50" {% if pagina_cantidad == "50" %}selected{% endif %}>50</option>
+                <option value="100" {% if pagina_cantidad == "100" %}selected{% endif %}>100</option>
+              </select>
+              <select name="idioma_seleccionar" id="select_idiomas">
+                  <option value="">-------</option>
+                {% for idioma in idiomas %}
+                  <option value="{{idioma.pk}}" {% if query_idioma|lower == idioma.pk|lower %}selected{% endif %}>{{idioma.nombre}}</option>
+                {% endfor %}
+              </select>
+              <select name="nivel_seleccionar" id="select_nivel">
+                  <option value="">-------</option>
+                {% for nivel in nivel_idiomas %}
+                  <option value="{{nivel.pk}}" {% if query_nivel|lower == nivel.pk|lower %}selected{% endif %}>{{nivel.nombre}}</option>
+                {% endfor %}
+              </select>
+                 <button id="filtros" class="btn btn-success btn-radius"><i class="fa fa-search"></i> Filtrar
+                 </button>
+                <a href="" id="link_agregar_ciclo" class="tooltip_agregar btn btn-success btn-radius"><i class="fa fa-edit "></i> Agregar/Modificar Ciclo
+                  <span>Debe seleccionar el idioma y el nivel del idioma</span>
+                </a>
+
+              </form>
+            </div>
+            <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                 <thead>
+                  <tr>
+                    <th>N°</th>
+                    <th>Idioma</th>
+                    <th>Nivel</th>
+                    <th>Nombre</th>
+
+                  </tr>
+                </thead>
+                  <tbody class="listado_idioma">
+                  {% for ciclo in ciclo_idiomas %}
+                    <tr role="row" class="odd row-fila" >
+                      <td class="sorting_1">{{forloop.counter}}</td>
+                      <td class="nombre_idioma"><h5>{{ciclo.idioma.nombre}}</h5><input type="hidden" data-pk="{{idioma.pk}}" class="input_modificar"></td>
+                      <td class="nombre_idioma"><h5>{{ciclo.nivel_idioma}}</h5><input type="hidden" data-pk="{{ciclo.pk}}" class="input_modificar"></td>
+                      <td class="nombre_idioma"><h5>{{ciclo.nombre}}</h5><input type="hidden" data-pk="{{ciclo.pk}}" class="input_modificar"></td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div id="listado_paginas">
+              <ul>
+                {% if ciclo_idiomas.has_previous %}
+                <li id="anterior"><a href="" data-pagina="{{ciclo_idiomas.previous_page_number}}"><</a></li>
+                {% endif %}
+                {% for pagina_link in ciclo_idiomas.paginator.page_range %}
+                <li><a href="?pag={{pagina_link}}" {% if pagina_link|lower == pagina|lower %}class="active"{% endif %} data-pagina="{{pagina_link}}">{{pagina_link}}</a></li>
+                {% endfor %}
+                {% if ciclo_idiomas.has_next %}
+                <li id="siguiente"><a href="" data-pagina="{{ciclo_idiomas.next_page_number}}">></a></li>
+                {% endif %}
+              </ul>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+{% block javascript %}
+  <script src="{{STATIC_URL}}js/common.js"></script>
+  <script>
+  $(document).ready(function() {
+    $("#link_agregar_ciclo").mouseover(function(event) {
+      /* Act on the event */
+      var select_idiomas = $("#select_idiomas").val();
+      var select_nivel = $("#select_nivel").val();
+      if (select_nivel=="" || select_idiomas=="") {
+        $(this).find('span').addClass('aparecer-alerta')
+      }
+    });
+    $("#link_agregar_ciclo").click(function(event) {
+      /* Act on the event */
+      event.preventDefault()
+      var url = "/idioma/idioma-ciclo-agregar/";
+      var select_idiomas = $("#select_idiomas").val();
+      var select_nivel = $("#select_nivel").val();
+      if (select_nivel=="" || select_idiomas=="") {
+        $(this).find('span').addClass('aparecer-alerta')
+      }
+      else{
+        window.location.href = url + select_idiomas + "/" + select_nivel;
+      }
+    });
+    $("#listado_paginas a").click(function(event) {
+      /* Act on the event */
+      event.preventDefault();
+      window.location.search=paginar($(this).attr('data-pagina'), {{pagina}})
+    });
+  });
+  </script>
+{% endblock javascript %}

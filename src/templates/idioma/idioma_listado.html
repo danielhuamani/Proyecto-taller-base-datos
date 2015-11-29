@@ -11,7 +11,20 @@
     <div class="actualizo_correctamente alert alert-success">
         Se actualizo correctamente el idioma
     </div>
+    <div class="box-header">
+        <h3 class="box-title">
+            IDIOMAS
+        </h3>
+    </div>
     <div class="box-body">
+      <form action="#" method="POST" id="form_idioma">
+        <div class="btn-group mb_20">
+            <a href="" id="agregar_idioma" class="btn btn-success btn-radius">Agregar Idioma</a>
+            <button type="button" id="guardar_crear_idioma" class="btn btn-success btn-radius"><i class="fa fa-fw fa-save"></i> Guardar</button>
+        </div>
+        <div class="cnt-formulario">
+        </div>
+      </form>
 
       <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
             <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
@@ -34,14 +47,6 @@
               </tbody>
               </table>
       </div>
-      <div class="btn-group mb_20">
-        <button type="button" id="agregar_idioma" class="btn btn-success">Agregar Idioma</button>
-      </div>
-      <form action="#" method="POST" id="form_idioma">
-        <div class="cnt-formulario">
-        </div>
-        <button type="button" id="guardar_crear_idioma" class="btn btn-success"><i class="fa fa-fw fa-save"></i> Guardar</button>
-      </form>
     </div><!-- /.box-body -->
   </div>
 </div>

@@ -11,8 +11,20 @@
     <div class="actualizo_correctamente alert alert-success">
         Se actualizo correctamente el nivel idioma
     </div>
+      <div class="box-header">
+        <h3 class="box-title">
+            NIVEL IDIOMAS
+        </h3>
+    </div>
     <div class="box-body">
-
+      <form action="#" method="POST" id="form_idioma">
+        <div class="btn-group mb_20">
+            <a href="" id="agregar_idioma" class="btn btn-success btn-radius">Agregar Nivel Idioma</a>
+            <button type="button" id="guardar_crear_idioma" class="btn btn-success btn-radius"><i class="fa fa-fw fa-save"></i> Guardar</button>
+        </div>
+        <div class="cnt-formulario">
+        </div>
+      </form>
       <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
             <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
              <thead>
@@ -34,14 +46,8 @@
               </tbody>
               </table>
       </div>
-      <div class="btn-group mb_20">
-        <button type="button" id="agregar_idioma" class="btn btn-success">Agregar Idioma</button>
-      </div>
-      <form action="#" method="POST" id="form_idioma">
-        <div class="cnt-formulario">
-        </div>
-        <button type="button" id="guardar_crear_idioma" class="btn btn-success"><i class="fa fa-fw fa-save"></i> Guardar</button>
-      </form>
+
+
     </div><!-- /.box-body -->
   </div>
 </div>
@@ -79,7 +85,7 @@
             var padre_fila = $(this).closest('.row-fila')
             var pk = padre_fila.find('.input_modificar').attr('data-pk');
             var texto = padre_fila.find('.input_modificar').val()
-            url_idioma_actualizar = '{% url "idioma:api_idioma_actualizar" %}'
+            url_idioma_actualizar = '{% url "idioma:api_nivel_idioma_actualizar" %}'
             /* Act on the event */
             ajax_actualizar_idioma(padre_fila, texto, pk, url_idioma_actualizar)
         });
@@ -87,11 +93,10 @@
         /* Act on the event */
             var arreglo_idiomas = new Array()
             var contador_listado = $(".listado_idioma tr").length
-            var url_idioma_crear = '{% url "idioma:api_nivel_idioma_actualizar" %}'
+            var url_idioma_crear = '{% url "idioma:api_nivel_idioma_agregar" %}'
             $(".idioma_nombre").each(function(index, el) {
                 arreglo_idiomas.push($(this).val())
             });
-
             ajax_crear_idioma(arreglo_idiomas, url_idioma_crear, contador_listado)
         });
         $("body").on('click', '.modficar_idioma', function(event) {

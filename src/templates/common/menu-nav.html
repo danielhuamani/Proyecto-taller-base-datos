@@ -46,9 +46,19 @@
                 <i class="glyphicon glyphicon-list-alt"></i> <span>Programación</span> <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
+                <li><a href="{% url 'programacion:turno_listado' %}"><i class="fa fa-user-plus"></i>Turno</a></li>
                 <li class="active"><a href="{% url 'programacion:aula_listado' %}"><i class="fa fa-files-o"></i>Aula</a>
                 </li>
-                <li><a href=""><i class="fa fa-user-plus"></i>Agregar Usuario</a></li>
+              </ul>
+            </li>
+            <li class="treeview">
+              <a href="#">
+                <i class="glyphicon glyphicon-list-alt"></i> <span>Profesor</span> <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{% url 'programacion:turno_listado' %}"><i class="fa fa-user-plus"></i>Turno</a></li>
+                <li class="active"><a href="{% url 'programacion:aula_listado' %}"><i class="fa fa-files-o"></i>Aula</a>
+                </li>
               </ul>
             </li>
           </ul>

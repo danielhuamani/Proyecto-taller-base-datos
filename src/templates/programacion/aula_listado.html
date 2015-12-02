@@ -4,7 +4,16 @@
 <div class="row">
   <div class="col-xs-12">
     <div class="box box-primary">
+        <div class="box-header">
+          <h3 class="box-title">
+            Aulas
+          </h3>
+        </div>
         <div class="box-body">
+            <div class="btn-group mb_20">
+                <a href="{% url 'programacion:aula_crear' %}" class="btn btn-success">Agregar Aula</a>
+
+            </div>
             <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
                 <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
                  <thead>
@@ -12,7 +21,6 @@
                     <th>N°</th>
                     <th>Aula</th>
                     <th>Capacidad</th>
-                    <th>Modficar</th>
                   </tr>
                 </thead>
                   <tbody class="listado_idioma">
@@ -20,17 +28,11 @@
                     <tr role="row" class="odd row-fila" >
                       <td class="sorting_1">{{forloop.counter}}</td>
                       <td class="nombre_idioma"><h5>{{aula.1}}</h5><input type="hidden" data-pk="{{idioma.pk}}" class="input_modificar"></td>
-                      <td class="nombre_idioma"><h5>{{aula.2}}</h5><input type="hidden" data-pk="{{aula.0}}" class="input_modificar"></td>
-                      <td><a href="" class="btn btn-primary modficar_idioma">Modificar</a>
-                      </td>
+                      <td class="nombre_idioma"><h5>{{aula.2}} personas</h5><input type="hidden" data-pk="{{aula.0}}" class="input_modificar"></td>
                     </tr>
                     {% endfor %}
                     </tbody>
                 </table>
-            </div>
-            <div class="btn-group mb_20">
-                <a href="{% url 'programacion:aula_crear' %}" class="btn btn-success">Agregar Aula</a>
-
             </div>
         </div>
     </div>

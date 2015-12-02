@@ -1,0 +1,101 @@
+{% extends 'common/base.html' %}
+{% block content %}
+
+<div class="row">
+  <div class="col-xs-12">
+    <div class="box box-primary">
+        <div class="actualizo_correctamente alert alert-success">
+            Se actualizo correctamente el Turno
+        </div>
+        <div class="box-header">
+          <h3 class="box-title">
+            Turno
+          </h3>
+        </div>
+        <div class="box-body">
+            <form action="#" method="POST" id="form_turno">
+                <div class="btn-group mb_20">
+                    <a href="" id="agregar_turno" class="btn margin-right-20 btn-success btn-radius">Agregar Turno</a>
+                    <button type="button" id="guardar_crear_turno" class="btn btn-success btn-radius"><i class="fa fa-fw fa-save"></i> Guardar</button>
+                </div>
+                <div class="cnt-formulario">
+                </div>
+            </form>
+            <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                 <thead>
+                  <tr>
+                    <th>N°</th>
+                    <th>Turno</th>
+                    <th>Modificar</th>
+                  </tr>
+                </thead>
+                  <tbody class="listado_idioma">
+                  {% for turno in turnos %}
+                    <tr role="row" class="odd row-fila" >
+                      <td class="sorting_1">{{forloop.counter}}</td>
+                      <td class="nombre_turno"><h5>{{turno.nombre}}</h5><input type="hidden" data-pk="{{turno.pk}}" class="input_modificar"></td>
+                      <td><button type="button" class="btn btn-primary modificar_turno">Modificar</button><button type="button" class="btn btn-success actualizar_turno guardar_none">Guardar</button>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+{% block javascript %}
+<script src='{{STATIC_URL}}js/cookies.js'></script>
+<script src='{{STATIC_URL}}js/api.js'></script>
+<!-- AdminLTE App -->
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("body").on('click', '#agregar_turno', function(event) {
+            /* Act on the event */
+            event.preventDefault()
+            console.log("entro")
+            var contador_formulario = $(".formulario_inicial").length + 1
+            html = '<div class="formulario_inicial form-group"><label for="">Nombre del Turno </label> <input type="text" class="turno_nombre" name="turno"></div>'
+            $(".cnt-formulario").append(html)
+
+        });
+        $("#guardar_crear_turno").click(function(event) {
+            /* Act on the event */
+            event.preventDefault();
+            var arreglo_turno = new Array()
+            var contador_listado = $(".listado_idioma tr").length
+            var url_turno_crear = '{% url "programacion:api_turno_agregar" %}'
+            $(".turno_nombre").each(function(index, el) {
+                arreglo_turno.push($(this).val())
+            });
+
+            ajax_crear_turno(arreglo_turno, url_turno_crear, contador_listado)
+        });
+        $("body").on('click', '.modificar_turno', function(event) {
+            /* Act on the event */
+            event.preventDefault()
+            var padre_fila = $(this).closest('.row-fila')
+            var texto = padre_fila.find('.nombre_turno h5').text()
+            padre_fila.find('.input_modificar').val(texto);
+            padre_fila.find('.input_modificar').attr('type', 'text');
+            padre_fila.find('.nombre_turno h5').text("")
+            padre_fila.find('.actualizar_turno').removeClass('guardar_none').addClass('guardar_block')
+            padre_fila.find('.modificar_turno').addClass('guardar_none')
+        });
+        $("body").on('click', '.actualizar_turno', function(event) {
+            event.preventDefault();
+            console.log("entro")
+            var padre_fila = $(this).closest('.row-fila')
+            var pk = padre_fila.find('.input_modificar').attr('data-pk');
+            var texto = padre_fila.find('.input_modificar').val()
+            url_idioma_actualizar = '{% url "programacion:api_turno_actualizar" %}'
+            /* Act on the event */
+            ajax_actualizar_turno(padre_fila, texto, pk, url_idioma_actualizar)
+        });
+    });
+</script>
+{% endblock javascript %}

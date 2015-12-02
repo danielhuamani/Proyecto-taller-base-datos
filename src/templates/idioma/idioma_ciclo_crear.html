@@ -26,6 +26,7 @@
               <input type="text" name="{{nivel_idioma.nombre.html_name}}" {% if nivel_idioma.nombre.value %}value="{{nivel_idioma.nombre.value}}"{% endif %}>
               <label for="">Eliminar</label>
               <input type="checkbox" name="{{nivel_idioma.DELETE.html_name}}" class="flat-red">
+            {{nivel_idioma.errors}}
             </div>
         {% endfor %}
         <button class="btn btn-success">Guardar</button>
@@ -41,13 +42,13 @@
 <script>
     $(document).ready(function() {
 
-        // $('.form-nivel-idioma').formset({
-        //     formCssClass: 'factura-form',
-        //     prefix: "{{ nivelFormSet.prefix }}",
-        //     deleteText: '',
-        //     addText: 'Agregar',
-        //     addCssClass: 'btn btn-success'
-        // });
+        $('.form-nivel-idioma').formset({
+            formCssClass: 'factura-form',
+            prefix: "{{ nivelFormSet.prefix }}",
+            deleteText: '',
+            addText: 'Agregar',
+            addCssClass: 'btn btn-success'
+        });
     });
 
 </script>

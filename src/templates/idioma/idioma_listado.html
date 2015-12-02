@@ -64,7 +64,7 @@
 
     <script src='{{STATIC_URL}}js/jquery_formset.js'></script>
     <script src='{{STATIC_URL}}js/cookies.js'></script>
-    <script src='{{STATIC_URL}}js/idioma.js'></script>
+    <script src='{{STATIC_URL}}js/api.js'></script>
     <!-- AdminLTE App -->
 
     <script type="text/javascript">
@@ -79,8 +79,7 @@
 
         });
         $("body").on('click', '.guardar_idioma  ', function(event) {
-            event.preventDefault();
-            console.log("entro")
+
             var padre_fila = $(this).closest('.row-fila')
             var pk = padre_fila.find('.input_modificar').attr('data-pk');
             var texto = padre_fila.find('.input_modificar').val()

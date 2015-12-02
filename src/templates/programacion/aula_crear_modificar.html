@@ -6,8 +6,27 @@
     <div class="box box-primary">
       <div class="box-header">
         <h3 class="box-title">
-        	Bienvenido al administrador de Sistema.
+            Bienvenido al administrador de Sistema.
         </h3>
+      </div>
+      <div class="box-body">
+        <form action="#" method="POST">
+            {% csrf_token %}
+            {{aulaFormSet.management_form}}
+            {% for aula in aulaFormSet %}
+                <div class="form-group form-nivel-idioma">
+                  <input type="hidden" {% if aula.id.value %}value="{{aula.id.value}}"{% endif %} name="{{aula.id.html_name}}">
+                  <label for="">N° Aula</label>
+                  <input type="text" name="{{aula.numero_aula.html_name}}" {% if aula.numero_aula.value %}value="{{aula.numero_aula.value}}"{% endif %}>
+                  <label for="">N° Capacidad de personas</label>
+                  <input type="text" name="{{aula.capacidad.html_name}}" {% if aula.capacidad.value %}value="{{aula.capacidad.value}}"{% endif %}>
+                  <label for="">Eliminar</label>
+                  <input type="checkbox" name="{{aula.DELETE.html_name}}" class="flat-red">
+                {{aula.errors}}
+                </div>
+            {% endfor %}
+            <button class="btn btn-success">Guardar</button>
+        </form>
       </div>
     </div>
   </div>

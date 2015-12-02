@@ -1,18 +1,29 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from apps.idioma.models import Idioma, CicloIdioma
 # # Create your models here.
 
-# class Horario(models.Model):
-#     turno = models.CharField("Turno")
-#     dia = models.CharField("Día")
-#     hora = models.C
-#     class Meta:
-#         verbose_name = "Horario"
-#         verbose_name_plural = "Horarios"
 
-#     def __str__(self):
-#         pass
+class Turno(models.Model):
+    nombre = models.CharField("Turno", max_length=60)
+
+    class Meta:
+        verbose_name = "Turno"
+        verbose_name_plural = "Turnos"
+
+    def __unicode__(self):
+        return self.nombre
+
+
+class Horario(models.Model):
+    turno = models.ForeignKey(Turno, related_name='turno_horario')
+    hora = models.TimeField("Hora")
+
+    class Meta:
+        verbose_name = "Horario"
+        verbose_name_plural = "Horarios"
+
+    def __unicode__(self):
+        pass
 
 
 class Aula(models.Model):

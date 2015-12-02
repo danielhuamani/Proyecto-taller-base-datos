@@ -36,7 +36,6 @@ def idioma_ciclo_listado(request):
     nivel_idiomas = NivelIdioma.objects.all().order_by("nombre")
     idiomas = Idioma.objects.all().order_by("nombre")
     ciclo_idiomas = paginador_general(ciclo_idiomas, pagina_cantidad, pagina)
-    print ciclo_idiomas.paginator.page_range
     return render(request, 'idioma/idioma_ciclo_listado.html', locals())
 
 
@@ -44,7 +43,7 @@ def idioma_ciclo_crear(request, pk_idioma=False, pk_nivel=False):
     idioma = get_object_or_404(Idioma, pk=pk_idioma)
     nivel = get_object_or_404(NivelIdioma, pk=pk_nivel)
     nivel_idiomas = NivelIdioma.objects.all().order_by("nombre")
-    NivelFormSet = modelformset_factory(CicloIdioma, extra=1, fields=('nombre', 'idioma', 'nivel_idioma', 'id'))
+    NivelFormSet = modelformset_factory(CicloIdioma, extra=0, min_num=1, validate_min=True, fields=('nombre', 'idioma', 'nivel_idioma', 'id'))
     if request.method == "POST":
         nivelFormSet = NivelFormSet(request.POST, queryset=CicloIdioma.objects.filter(nivel_idioma=pk_nivel, idioma=pk_idioma))
         if nivelFormSet.is_valid():
@@ -52,7 +51,6 @@ def idioma_ciclo_crear(request, pk_idioma=False, pk_nivel=False):
             return redirect(reverse("idioma:idioma_ciclo_listado"))
     else:
         nivelFormSet = NivelFormSet(queryset=CicloIdioma.objects.filter(nivel_idioma=pk_nivel, idioma=pk_idioma))
-        print nivelFormSet
     return render(request, 'idioma/idioma_ciclo_crear.html', locals())
 
 

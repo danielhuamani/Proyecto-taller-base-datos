@@ -12,9 +12,10 @@ urlpatterns = [
         {'document_root': settings.MEDIA_ROOT}),
 
     # WEB
-    url(r'', include('apps.sistema.urls', namespace="sistema")),
+    url(r'^sistema/', include('apps.sistema.urls', namespace="sistema")),
     url(r'^idioma/', include('apps.idioma.urls', namespace="idioma")),
     url(r'^programacion/', include('apps.programacion.urls', namespace="programacion")),
+    url(r'', include('apps.alumno_profesor.urls', namespace="alumno_profesor")),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 handler404 = 'apps.web.views.page_404'

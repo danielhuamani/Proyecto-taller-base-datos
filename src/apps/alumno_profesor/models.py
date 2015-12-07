@@ -10,17 +10,18 @@ class Profesor(models.Model):
     sexo = models.CharField("Sexo", max_length=120, choices=SEXO)
     telefono = models.CharField("Teléfono", max_length=12, blank=True)
     direccion = models.CharField("Dirección", max_length=120)
-    codigo_profesor = models.CharField("Codigo Profesor", max_length=12, blank=True)
+    codigo_profesor = models.CharField("Codigo Profesor", max_length=12, blank=True, unique=True)
     estado = models.BooleanField("Estado", default=True)
-    email = models.EmailField("Email")
+    email = models.EmailField("Email", unique=True)
     fecha_agregado = models.DateTimeField("Fecha Registrado", auto_now_add=True)
+    estado = models.BooleanField("Estado", default=True)
 
     class Meta:
         verbose_name = "Profesor"
         verbose_name_plural = "Profesors"
 
     def __unicode__(self):
-        return "%s, %s" % (self.nombres, self.appellidos)
+        return "%s, %s" % (self.nombres, self.apellidos)
 
 
 class TipoAlumno(models.Model):

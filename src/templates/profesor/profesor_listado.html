@@ -35,6 +35,7 @@
                 <th>Nombres</th>
                 <th>Apellidos</th>
                 <th>codigo profesor</th>
+                <th>Email</th>
                 <th>Estado</th>
               </tr>
             </thead>
@@ -42,9 +43,10 @@
               {% for profesor in profesores %}
                 <tr role="row" class="odd row-fila" >
                   <td class="sorting_1">{{forloop.counter}}</td>
-                  <td class="nombre_idioma"><a href="">{{profesor.nombres}}</a></td>
+                  <td class="nombre_idioma"><a href="{{profesor.get_absolute_url}}">{{profesor.nombres}}</a></td>
                   <td>{{profesor.apellidos}}</td>
                   <td>{{profesor.codigo_profesor}}</td>
+                  <td>{{profesor.email}}</td>
                   <td>{% if profesor.estado %}
                   	Activo
                   	{% else %}
@@ -76,4 +78,13 @@
 {% endblock content %}
 {% block javascript %}
 <script src="{{STATIC_URL}}js/common.js"></script>
+<script>
+	$(document).ready(function() {
+		$("#listado_paginas a").click(function(event) {
+      /* Act on the event */
+      		event.preventDefault();
+      		window.location.search=paginar($(this).attr('data-pagina'), {{pagina}})
+	    });
+	});
+</script>
 {% endblock javascript %}

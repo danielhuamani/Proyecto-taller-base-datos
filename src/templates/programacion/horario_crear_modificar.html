@@ -1,0 +1,22 @@
+{% extends 'common/base.html' %}
+{% block content %}
+
+<div class="row">
+  <div class="col-xs-12">
+    <div class="box box-primary">
+      <div class="box-header">
+        <h3 class="box-title">
+        	Agregar horario para el turno {{turno.nombre}}
+        </h3>
+        <div class="box-body">
+			<form action="">
+				{{ horarioFormSet.management_form }}
+				{% csrf_token %}
+				{{horarioFormSet}}
+			</form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

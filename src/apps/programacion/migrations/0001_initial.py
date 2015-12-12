@@ -23,6 +23,17 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
+            name='Horario',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('hora', models.TimeField()),
+            ],
+            options={
+                'verbose_name': 'Horario',
+                'verbose_name_plural': 'Horarios',
+            },
+        ),
+        migrations.CreateModel(
             name='Periodo',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
@@ -33,5 +44,21 @@ class Migration(migrations.Migration):
                 'verbose_name': 'Fecha',
                 'verbose_name_plural': 'Fechas',
             },
+        ),
+        migrations.CreateModel(
+            name='Turno',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('nombre', models.CharField(max_length=60, verbose_name=b'Turno')),
+            ],
+            options={
+                'verbose_name': 'Turno',
+                'verbose_name_plural': 'Turnos',
+            },
+        ),
+        migrations.AddField(
+            model_name='horario',
+            name='turno',
+            field=models.ForeignKey(related_name='turno_horario', to='programacion.Turno'),
         ),
     ]

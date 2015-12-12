@@ -1,4 +1,5 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.core.urlresolvers import reverse
 from django.db.models import Q
 from .forms import ProfesorForm
 from apps.common.util import paginador_general
@@ -17,15 +18,18 @@ def profesor_listado(request):
     return render(request, "profesor/profesor_listado.html", locals())
 
 
-def profesor_crear_modificar(request, pk):
+def profesor_crear_modificar(request, pk=False):
     if pk:
         profesor = get_object_or_404(Profesor, pk=pk)
     else:
         profesor = Profesor()
+
     if request.method == "POST":
         form = ProfesorForm(request.POST, instance=profesor)
         if form.is_valid():
             form.save()
+            return redirect(reverse("alumno_profesor:profesor_listado"))
     else:
         form = ProfesorForm(instance=profesor)
-    return render(request, "profesor/profesor_crear.html", locals())
+
+    return render(request, "profesor/profesor_crear_modificar.html", locals())

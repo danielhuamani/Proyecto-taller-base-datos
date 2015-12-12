@@ -16,14 +16,15 @@ class Turno(models.Model):
 
 class Horario(models.Model):
     turno = models.ForeignKey(Turno, related_name='turno_horario')
-    hora = models.TimeField("Hora")
+    hora = models.TimeField()
+    hora_fin = models.TimeField()
 
     class Meta:
         verbose_name = "Horario"
         verbose_name_plural = "Horarios"
 
     def __unicode__(self):
-        pass
+        return '%s - %s' % (self.hora, self.hora_fin)
 
 
 class Aula(models.Model):

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from django.core.urlresolvers import reverse
 from apps.common.constants import SEXO
 # Create your models here.
 
@@ -19,6 +20,9 @@ class Profesor(models.Model):
     class Meta:
         verbose_name = "Profesor"
         verbose_name_plural = "Profesors"
+
+    def get_absolute_url(self):
+        return reverse('alumno_profesor:profesor_modificar', kwargs={'pk': self.pk})
 
     def __unicode__(self):
         return "%s, %s" % (self.nombres, self.apellidos)
@@ -51,6 +55,7 @@ class Alumno(models.Model):
     class Meta:
         verbose_name = "Alumno"
         verbose_name_plural = "Alumnos"
+
 
     def __unicode__(self):
         return "%s, %s" % (self.nombres, self.appellidos)

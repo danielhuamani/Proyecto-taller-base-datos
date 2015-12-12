@@ -47,13 +47,15 @@
               </a>
               <ul class="treeview-menu">
                 <li><a href="{% url 'programacion:turno_listado' %}"><i class="fa fa-user-plus"></i>Turno</a></li>
+                <li class="active"><a href="{% url 'programacion:horario_listado' %}"><i class="fa fa-files-o"></i>Horario</a>
+                </li>
                 <li class="active"><a href="{% url 'programacion:aula_listado' %}"><i class="fa fa-files-o"></i>Aula</a>
                 </li>
               </ul>
             </li>
             <li class="treeview">
               <a href="#">
-                <i class="glyphicon glyphicon-list-alt"></i> <span>Profesor</span> <i class="fa fa-angle-left pull-right"></i>
+                <i class="glyphicon glyphicon-list-alt"></i> <span>Alumnos y Profesor</span> <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
                 <li><a href="{% url 'alumno_profesor:profesor_listado' %}"><i class="fa fa-user-plus"></i>Listado Profesor</a></li>

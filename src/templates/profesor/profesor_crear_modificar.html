@@ -16,19 +16,19 @@
 			<div class="form-group overflow">
 				<label for="" class="col-sm-2 centrar-label">{{form.nombres.label}}</label>
 				<div class="col-sm-6">
-					<input type="text" name="{{form.nombres.html_name}}" {% if form.nombres.value %}{{form.nombres.value}}{% endif %} class="form-control">{{form.nombres.errors.as_text}}
+					<input type="text" name="{{form.nombres.html_name}}" {% if form.nombres.value %}value="{{form.nombres.value}}"{% endif %} class="form-control">{{form.nombres.errors.as_text}}
 				</div>
 			</div>
 			<div class="form-group overflow">
 				<label for="" class="col-sm-2 centrar-label">{{form.apellidos.label}}</label>
 				<div class="col-sm-6">
-					<input type="text" name="{{form.apellidos.html_name}}" {% if form.apellidos.value %}{{form.apellidos.value}}{% endif %} class="form-control">{{form.apellidos.errors.as_text}}
+					<input type="text" name="{{form.apellidos.html_name}}" {% if form.apellidos.value %}value="{{form.apellidos.value}}"{% endif %} class="form-control">{{form.apellidos.errors.as_text}}
 				</div>
 			</div>
 			<div class="form-group overflow">
 				<label for="" class="col-sm-2 centrar-label">{{form.telefono.label}}</label>
 				<div class="col-sm-6">
-					<input type="text" name="{{form.telefono.html_name}}" {% if form.telefono.value %}{{form.telefono.value}}{% endif %} class="form-control">
+					<input type="text" name="{{form.telefono.html_name}}" {% if form.telefono.value %}value="{{form.telefono.value}}"{% endif %} class="form-control">
 					{{form.telefono.errors.as_text}}
 				</div>
 			</div>
@@ -36,29 +36,29 @@
 				<label for="" class="col-sm-2 centrar-label">{{form.sexo.label}}</label>
 				<div class="col-sm-2">
 					<select name="{{form.sexo.html_name}}" class="form-control" id="">
-						<option value="F" {% if request.POST.sexo == "F" %}selected{% endif %} >Femenino</option>
-						<option value="M" {% if request.POST.sexo == "M" %}selected{% endif %}>Masculino</option>
+						<option value="F" {% if form.sexo.value == "F" %}selected{% endif %} >Femenino</option>
+						<option value="M" {% if form.sexo.value == "M" %}selected{% endif %}>Masculino</option>
 					</select>
 				</div>
 			</div>
 			<div class="form-group overflow">
 				<label for="" class="col-sm-2 centrar-label">{{form.direccion.label}}</label>
 				<div class="col-sm-6">
-					<input type="text" name="{{form.direccion.html_name}}" {% if form.direccion.value %}{{form.direccion.value}}{% endif %} class="form-control">
+					<input type="text" name="{{form.direccion.html_name}}" {% if form.direccion.value %}value="{{form.direccion.value}}"{% endif %} class="form-control">
 					{{form.direccion.errors.as_text}}
 				</div>
 			</div>
 			<div class="form-group overflow">
 				<label for="" class="col-sm-2 centrar-label">{{form.email.label}}</label>
 				<div class="col-sm-6">
-					<input type="email" name="{{form.email.html_name}}" {% if form.email.value %}{{form.email.value}}{% endif %} class="form-control">
+					<input type="email" name="{{form.email.html_name}}" {% if form.email.value %}value="{{form.email.value}}"{% endif %} class="form-control">
 					{{form.email.errors.as_text}}
 				</div>
 			</div>
 			<div class="form-group overflow">
 				<label for="" class="col-sm-2 centrar-label">{{form.codigo_profesor.label}}</label>
 				<div class="col-sm-6">
-					<input type="text" name="{{form.codigo_profesor.html_name}}" {% if form.codigo_profesor.value %}{{form.codigo_profesor.value}}{% endif %} class="form-control">
+					<input type="text" name="{{form.codigo_profesor.html_name}}" {% if form.codigo_profesor.value %}value="{{form.codigo_profesor.value}}"{% endif %} class="form-control">
 					{{form.codigo_profesor.errors.as_text}}
 				</div>
 			</div>

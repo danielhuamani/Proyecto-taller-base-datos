@@ -1,0 +1,105 @@
+{% extends 'common/base.html' %}
+{% block content %}
+
+<div class="row">
+  <div class="col-xs-12">
+    <div class="box box-primary">
+      <div class="box-header">
+        <h3 class="box-title">
+            Programación
+        </h3>
+      </div>
+      <div class="box-body">
+        <div class="box-body">
+            <div class="btn-group mb_20">
+                <form action="#" method="GET">
+                    <select name="pcantidad" class="float-left" id="paginador">
+                        <option value="2" {% if pagina_cantidad == "2" %}selected{% endif %}>2</option>
+                        <option value="25" {% if pagina_cantidad == "25" %}selected{% endif %}>25</option>
+                        <option value="50" {% if pagina_cantidad == "50" %}selected{% endif %}>50</option>
+                        <option value="100" {% if pagina_cantidad == "100" %}selected{% endif %}>100</option>
+                    </select>
+                    <select name="horario_seleccionar" id="select_horario">
+                      <option value="">-------</option>
+                    {% for turno in turnos %}
+                      <option value="{{turno.pk}}" {% if query_turno|lower == turno.pk|lower %}selected{% endif %}>{{turno.nombre}}</option>
+                    {% endfor %}
+                    </select>
+                    <button id="filtros" class="btn btn-success btn-radius"><i class="fa fa-search"></i> Filtrar
+                     </button>
+                    <a href="" id="link_agregar_horario" class="tooltip_agregar btn btn-success btn-radius"><i class="fa fa-edit "></i> Agregar/Modificar Horario
+                      <span>Debe seleccionar el horario</span>
+                    </a>
+              </form>
+            </div>
+            <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                 <thead>
+                  <tr>
+                    <th>N°</th>
+                    <th>Periodo</th>
+                    <th>Ciclo idioma</th>
+                    <th>Profesor</th>
+                    <th>Aula</th>
+                    <th>Horario</th>
+
+                  </tr>
+                </thead>
+                  <tbody class="listado_idioma">
+                  {% for programa in programacion %}
+                    <tr role="row" class="odd row-fila" >
+                      <td class="sorting_1">{{forloop.counter}}</td>
+                      <td class="nombre_idioma"><h5>{{programa.periodo.fecha_inicio}} - {{programa.periodo.fecha_final}}</h5></td>
+                      <td class="nombre_idioma"><h5>{{programa.ciclo_idioma}}</h5></td>
+                      <td class="nombre_idioma"><h5>{{programa.profesor}}</h5></td>
+                      <td class="nombre_idioma"><h5>{{programa.aula.numero_aula}}</h5></td>
+                      <td class="nombre_idioma"><h5>{{programa.horario}}</h5></td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div id="listado_paginas">
+              <ul>
+                {% if horarios.has_previous %}
+                <li id="anterior"><a href="" data-pagina="{{horarios.previous_page_number}}"><</a></li>
+                {% endif %}
+                {% for pagina_link in horarios.paginator.page_range %}
+                <li><a href="?pag={{pagina_link}}" {% if pagina_link|lower == pagina|lower %}class="active"{% endif %} data-pagina="{{pagina_link}}">{{pagina_link}}</a></li>
+                {% endfor %}
+                {% if horarios.has_next %}
+                <li id="siguiente"><a href="" data-pagina="{{horarios.next_page_number}}">></a></li>
+                {% endif %}
+              </ul>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+{% block javascript %}
+<script src="{{STATIC_URL}}js/common.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#listado_paginas a").click(function(event) {
+      /* Act on the event */
+            event.preventDefault();
+            window.location.search=paginar($(this).attr('data-pagina'), {{pagina}})
+        });
+        $("#link_agregar_horario").click(function(event) {
+      /* Act on the event */
+          event.preventDefault()
+          var url = "/programacion/horario-agregar/";
+          var select_horario = $("#select_horario").val();
+
+          if (select_horario=="") {
+            $(this).find('span').addClass('aparecer-alerta')
+          }
+          else{
+            window.location.href = url + select_horario;
+          }
+        });
+    });
+</script>
+{% endblock javascript %}

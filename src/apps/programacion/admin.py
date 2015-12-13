@@ -5,4 +5,6 @@ from models import *
 admin.site.register(Aula)
 admin.site.register(Turno)
 admin.site.register(Horario)
+admin.site.register(Programacion)
+admin.site.register(Periodo)
 

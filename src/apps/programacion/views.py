@@ -1,9 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.core.urlresolvers import reverse
 from django.db import connection
 from django.forms.models import modelformset_factory
 from apps.common.util import paginador_general
-from .models import Turno, Horario, Aula
+from .models import Turno, Horario, Aula, Programacion, Periodo
 from django.http import JsonResponse
 import json
 # Create your views here.
@@ -27,9 +27,8 @@ def horario_listado(request):
 
 
 def horario_crear_modificar(request, pk=False):
-    turno = Turno.objects.filter(pk=pk)
-    print turno.nombre
-    HorarioFormSet = modelformset_factory(Horario, extra=1, min_num=1, validate_min=True, fields=('hora', 'hora_fin', 'id'))
+    turno = get_object_or_404(Turno, pk=pk)
+    HorarioFormSet = modelformset_factory(Horario, extra=1, min_num=1, validate_min=True, can_delete=True, fields=('hora', 'hora_fin', 'id'))
     if request.method == "POST":
         horarioFormSet = HorarioFormSet(request.POST, queryset=Horario.objects.filter(turno__pk=pk))
         if horarioFormSet.is_valid():
@@ -47,13 +46,17 @@ def aula_listado(request):
     return render(request, 'programacion/aula_listado.html', locals())
 
 
+def programacion_listado(request):
+    programacion = Programacion.objects.all().prefetch_related('periodo').prefetch_related('aula').prefetch_related('horario').prefetch_related('profesor').prefetch_related('ciclo_idioma')
+    return render(request, 'programacion/programacion_listado.html', locals())
+
+
 def aula_crear_modificar(request, pk=False):
     AulaFormSet = modelformset_factory(Aula, extra=1, min_num=1, validate_min=True, fields=('capacidad', 'numero_aula', 'id'))
     if request.method == "POST":
         aulaFormSet = AulaFormSet(request.POST, queryset=Aula.objects.all())
         print aulaFormSet
         if aulaFormSet.is_valid():
-            print "entro"
             aulaFormSet.save()
             return redirect(reverse("programacion:aula_listado"))
     else:

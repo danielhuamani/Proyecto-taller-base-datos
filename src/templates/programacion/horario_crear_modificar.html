@@ -1,4 +1,8 @@
 {% extends 'common/base.html' %}
+{% block css %}
+
+<link href="{{STATIC_URL}}css/jquery.timepicker.css" rel="stylesheet" type="text/css" />
+{% endblock css %}
 {% block content %}
 
 <div class="row">
@@ -9,10 +13,23 @@
         	Agregar horario para el turno {{turno.nombre}}
         </h3>
         <div class="box-body">
-			<form action="">
+			<form action="#" method="POST">
 				{{ horarioFormSet.management_form }}
 				{% csrf_token %}
-				{{horarioFormSet}}
+				{% for horario in horarioFormSet %}
+					<div class="form-group form-horario">
+						<label for="">Horario Inicio:</label>
+						<input class="timepicker" id="" name="{{horario.hora.html_name}}" type="text" {% if horario.hora.value %}value="{{horario.hora.value}}"{% endif %}>
+						<label for="">Horario FIn:</label>
+						<input class="timepicker" id="" name="{{horario.hora_fin.html_name}}" type="text" {% if horario.hora_fin.value %}value="{{horario.hora_fin.value}}"{% endif %}>
+						<input id="id_form-1-id" name="{{horario.id.html_name}}" type="hidden" {% if horario.id.value %}value="{{horario.id.value}}"{% endif %}>
+						<label for="">Eliminar</label>
+						<input type="checkbox" name="{{horario.DELETE.html_name}}" class="flat-red">
+						<div>{{horario.errors.as_text}}</div>
+					</div>
+
+				{% endfor %}
+				<button class="btn btn-success">Guardar</button>
 			</form>
         </div>
       </div>
@@ -20,3 +37,24 @@
   </div>
 </div>
 {% endblock content %}
+{% block javascript %}
+<script src="{{STATIC_URL}}js/jquery.timepicker.js"></script>
+<script src="{{STATIC_URL}}js/jquery_formset.js"></script>
+<script src="{{STATIC_URL}}js/moment.js"></script>
+<script>
+    $(document).ready(function() {
+
+        $('.form-horario').formset({
+            formCssClass: 'factura-form',
+            prefix: "{{ horarioFormSet.prefix }}",
+            deleteText: '',
+            addText: 'Agregar',
+            addCssClass: 'btn btn-success'
+        });
+        $('input.timepicker').timepicker({
+
+        });
+    });
+
+</script>
+{% endblock javascript %}

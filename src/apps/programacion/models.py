@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from apps.alumno_profesor.models import Profesor
+from apps.idioma.models import CicloIdioma
 # # Create your models here.
 
 
@@ -16,15 +18,15 @@ class Turno(models.Model):
 
 class Horario(models.Model):
     turno = models.ForeignKey(Turno, related_name='turno_horario')
-    hora = models.TimeField()
-    hora_fin = models.TimeField()
+    hora = models.TimeField("Horario Inicio")
+    hora_fin = models.TimeField("Horario FIn")
 
     class Meta:
         verbose_name = "Horario"
         verbose_name_plural = "Horarios"
 
     def __unicode__(self):
-        return '%s - %s' % (self.hora, self.hora_fin)
+        return '%s: %s - %s' % (self.turno, self.hora, self.hora_fin)
 
 
 class Aula(models.Model):
@@ -48,18 +50,19 @@ class Periodo(models.Model):
         verbose_name_plural = "Fechas"
 
     def __unicode__(self):
-        return "Fechas"
+        return "%s - %s" % (self.fecha_inicio, self.fecha_final)
 
 
-# class Programacion(models.Model):
-#     idioma = models.ForeignKey(Idioma, related_name='idioma_programacion')
-#     aula = models.ForeignKey(Aula, related_name='aula_programacion')
-#     periodo = models.ForeignKey(Periodo, related_name='periodo_programacion')
-#     ciclo_idioma = models.ForeignKey(CicloIdioma, related_name='ciclo_idioma_programacion')
+class Programacion(models.Model):
+    aula = models.ForeignKey(Aula, related_name='aula_programacion')
+    periodo = models.ForeignKey(Periodo, related_name='periodo_programacion')
+    ciclo_idioma = models.ForeignKey(CicloIdioma, related_name='ciclo_idioma_programacion')
+    profesor = models.ForeignKey(Profesor, related_name='profesor_programacion')
+    horario = models.ForeignKey(Horario, related_name='horario_programacion')
 
-#     class Meta:
-#         verbose_name = "Programacion"
-#         verbose_name_plural = "Programacions"
+    class Meta:
+        verbose_name = "Programacion"
+        verbose_name_plural = "Programacions"
 
-#     def __str__(self):
-#         pass
+    def __str__(self):
+        return str(self.ciclo_idioma)

@@ -36,4 +36,4 @@ class CicloIdioma(models.Model):
         verbose_name_plural = "CicloIdiomas"
 
     def __unicode__(self):
-        return self.nombre
+        return "%s - %s - %s" % (self.idioma, self.nivel_idioma, self.nombre)

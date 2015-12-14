@@ -3,9 +3,12 @@ from django.core.urlresolvers import reverse
 from django.db import connection
 from django.forms.models import modelformset_factory
 from apps.common.util import paginador_general
+from apps.idioma.models import Idioma, CicloIdioma
 from .models import Turno, Horario, Aula, Programacion, Periodo
 from django.http import JsonResponse
+from .forms import PeriodoForm, ProgramacionForm
 import json
+import datetime
 # Create your views here.
 
 
@@ -46,16 +49,59 @@ def aula_listado(request):
     return render(request, 'programacion/aula_listado.html', locals())
 
 
-def programacion_listado(request):
-    programacion = Programacion.objects.all().prefetch_related('periodo').prefetch_related('aula').prefetch_related('horario').prefetch_related('profesor').prefetch_related('ciclo_idioma')
+def periodo_listado(request):
+    periodos = Periodo.objects.all().order_by("-id")
+    pagina = request.GET.get("pag", 1)
+    pagina_cantidad = request.GET.get('pcantidad', 50)
+    query_fecha_inicio = request.GET.get("fecha_inicio", "")
+    query_fecha_final = request.GET.get("fecha_final", "")
+    if query_fecha_inicio:
+        query_fecha_inicio = datetime.datetime.strptime(query_fecha_inicio, "%d-%m-%Y").date()
+        periodos = periodos.filter(fecha_inicio__gte=query_fecha_inicio)
+    if query_fecha_final:
+        query_fecha_final = datetime.datetime.strptime(query_fecha_final, "%d-%m-%Y").date()
+        periodos = periodos.filter(fecha_inicio__lte=query_fecha_final)
+    if request.method == "POST":
+        fecha_inicio = request.POST.get("form_fecha_inicio")
+        fecha_final = request.POST.get("form_fecha_final")
+        fecha_inicio = datetime.datetime.strptime(fecha_inicio, "%d-%m-%Y").date()
+        fecha_final = datetime.datetime.strptime(fecha_final, "%d-%m-%Y").date()
+        Periodo(fecha_final=fecha_final, fecha_inicio=fecha_inicio).save()
+        return redirect(reverse("programacion:periodo_listado"))
+    else:
+        ejecuto_post = False
+    periodos = paginador_general(periodos, pagina_cantidad, pagina)
+    return render(request, 'programacion/periodo_listado.html', locals())
+
+
+def programacion_listado(request, pk=False):
+    periodo = get_object_or_404(Periodo, pk=pk)
+    idiomas = Idioma.objects.all()
+    programacion = Programacion.objects.filter(periodo=periodo).prefetch_related('aula').prefetch_related('horario__turno').prefetch_related('profesor').prefetch_related('ciclo_idioma__idioma').prefetch_related('ciclo_idioma__nivel_idioma')
+    pagina = request.GET.get("pag", 1)
+    pagina_cantidad = request.GET.get('pcantidad', 2)
+    query_idioma = request.GET.get("query_idioma", False)
+    if query_idioma:
+        programacion = programacion.filter(ciclo_idioma__idioma=query_idioma)
+    programacion = paginador_general(programacion, pagina_cantidad, pagina)
     return render(request, 'programacion/programacion_listado.html', locals())
 
 
-def aula_crear_modificar(request, pk=False):
+def programacion_crear_modificar(request, pk_idioma=False, pk_periodo=False):
+    periodo = get_object_or_404(Periodo, pk=pk_periodo)
+    aulas = Aula.objects.all()
+    ciclo_idiomas = CicloIdioma.objects.filter(idioma=pk_idioma)
+    if request.method == "POST":
+        form = ProgramacionForm(request.POST)
+    else:
+        form = ProgramacionForm()
+    return render(request, 'programacion/programacion_crear_modificar.html', locals())
+
+
+def aula_crear_modificar(request, pk_idioma=False):
     AulaFormSet = modelformset_factory(Aula, extra=1, min_num=1, validate_min=True, fields=('capacidad', 'numero_aula', 'id'))
     if request.method == "POST":
         aulaFormSet = AulaFormSet(request.POST, queryset=Aula.objects.all())
-        print aulaFormSet
         if aulaFormSet.is_valid():
             aulaFormSet.save()
             return redirect(reverse("programacion:aula_listado"))

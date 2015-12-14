@@ -20,8 +20,8 @@
         {% for nivel_idioma in nivelFormSet %}
             <div class="form-group form-nivel-idioma">
               <input type="hidden" {% if nivel_idioma.id.value %}value="{{nivel_idioma.id.value}}"{% endif %} name="{{nivel_idioma.id.html_name}}">
-              <input type="hidden" value="{{idioma.pk}}" name="{{nivel_idioma.idioma.html_name}}">
-              <input type="hidden" value="{{nivel.pk}}" name="{{nivel_idioma.nivel_idioma.html_name}}">
+              <input type="hidden" class="permanecer-pk" value="{{idioma.pk}}" name="{{nivel_idioma.idioma.html_name}}">
+              <input type="hidden" class="permanecer-pk" value="{{nivel.pk}}" name="{{nivel_idioma.nivel_idioma.html_name}}">
               <label for="">Nombre</label>
               <input type="text" name="{{nivel_idioma.nombre.html_name}}" {% if nivel_idioma.nombre.value %}value="{{nivel_idioma.nombre.value}}"{% endif %}>
               <label for="">Eliminar</label>
@@ -47,7 +47,8 @@
             prefix: "{{ nivelFormSet.prefix }}",
             deleteText: '',
             addText: 'Agregar',
-            addCssClass: 'btn btn-success'
+            addCssClass: 'btn btn-success agregar-item',
+            keepFieldValues: 'input.permanecer-pk'
         });
     });
 

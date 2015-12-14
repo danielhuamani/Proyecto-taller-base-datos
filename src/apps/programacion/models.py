@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from django.core.urlresolvers import reverse
 from apps.alumno_profesor.models import Profesor
 from apps.idioma.models import CicloIdioma
 # # Create your models here.
@@ -30,7 +31,7 @@ class Horario(models.Model):
 
 
 class Aula(models.Model):
-    numero_aula = models.IntegerField("Numero de aula")
+    numero_aula = models.IntegerField("Numero de aula", unique=True)
     capacidad = models.IntegerField("capacidad", blank=True)
 
     class Meta:
@@ -48,6 +49,9 @@ class Periodo(models.Model):
     class Meta:
         verbose_name = "Fecha"
         verbose_name_plural = "Fechas"
+
+    def get_absolute_url(self):
+        return reverse('programacion:programacion_listado', kwargs={'pk': self.pk})
 
     def __unicode__(self):
         return "%s - %s" % (self.fecha_inicio, self.fecha_final)

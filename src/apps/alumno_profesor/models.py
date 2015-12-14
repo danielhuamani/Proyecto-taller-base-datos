@@ -56,6 +56,5 @@ class Alumno(models.Model):
         verbose_name = "Alumno"
         verbose_name_plural = "Alumnos"
 
-
     def __unicode__(self):
         return "%s, %s" % (self.nombres, self.appellidos)

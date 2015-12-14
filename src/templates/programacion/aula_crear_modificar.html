@@ -32,3 +32,25 @@
   </div>
 </div>
 {% endblock content %}
+{% block javascript %}
+<script src="{{STATIC_URL}}plugins/iCheck/icheck.min.js" type="text/javascript"></script>
+<script src="{{STATIC_URL}}js/jquery_formset.js"></script>
+<script>
+    $(document).ready(function() {
+
+        $('.form-nivel-idioma').formset({
+            formCssClass: 'factura-form',
+            prefix: "{{ aulaFormSet.prefix }}",
+            deleteText: '',
+            addText: 'Agregar',
+            addCssClass: 'btn btn-success agregar-item',
+
+        });
+        $(".agregar-item").click(function(event) {
+          /* Act on the event */
+          // $(".idioma-pk").val({{idioma.pk}})
+        });
+    });
+
+</script>
+{% endblock javascript %}

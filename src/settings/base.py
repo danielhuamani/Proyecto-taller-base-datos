@@ -43,7 +43,7 @@ INSTALLED_APPS = (
     'apps.idioma',
     'apps.alumno_profesor',
     'apps.programacion',
-    # 'apps.miembros',
+    'apps.matricula',
 
 )
 

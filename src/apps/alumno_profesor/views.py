@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 from .forms import ProfesorForm
+from apps.programacion.models import Periodo
 from apps.common.util import paginador_general
 from .models import Profesor
 # Create your views here.

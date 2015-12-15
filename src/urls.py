@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^idioma/', include('apps.idioma.urls', namespace="idioma")),
     url(r'^programacion/', include('apps.programacion.urls', namespace="programacion")),
     url(r'', include('apps.alumno_profesor.urls', namespace="alumno_profesor")),
+    url(r'', include('apps.matricula.urls', namespace="matricula")),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 handler404 = 'apps.web.views.page_404'

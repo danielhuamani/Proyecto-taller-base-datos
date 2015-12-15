@@ -14,16 +14,15 @@
             <div class="btn-group mb_20">
                 <form action="#" method="GET">
                     <select name="pcantidad" class="float-left" id="paginador">
-                        <option value="2" {% if pagina_cantidad == "2" %}selected{% endif %}>2</option>
                         <option value="25" {% if pagina_cantidad == "25" %}selected{% endif %}>25</option>
                         <option value="50" {% if pagina_cantidad == "50" %}selected{% endif %}>50</option>
                         <option value="100" {% if pagina_cantidad == "100" %}selected{% endif %}>100</option>
                     </select>
-        					<select name="query_idioma" id="select_idioma">
-        						{% for idioma in idiomas %}
-        							<option value="{{idioma.pk}}" {% if query_idioma|lower == idioma.pk|lower %}selected{% endif %}>{{idioma.nombre}}</option>
-        						{% endfor %}
-        					</select>
+        					  <select name="query_idioma" id="select_idioma">
+          						{% for idioma in idiomas %}
+          							<option value="{{idioma.pk}}" {% if query_idioma|lower == idioma.pk|lower %}selected{% endif %}>{{idioma.nombre}}</option>
+          						{% endfor %}
+        					  </select>
                     <button id="filtros" class="btn btn-success btn-radius"><i class="fa fa-search"></i> Filtrar
                      </button>
                     <a href="" id="link_agregar_programacion" class="tooltip_agregar btn btn-success btn-radius"><i class="fa fa-edit "></i> Agregar/Modificar Progrmacion

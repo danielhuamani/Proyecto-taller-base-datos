@@ -4,6 +4,7 @@ from django.db import connection
 from django.forms.models import modelformset_factory
 from apps.common.util import paginador_general
 from apps.idioma.models import Idioma, CicloIdioma
+from apps.alumno_profesor.models import Profesor
 from .models import Turno, Horario, Aula, Programacion, Periodo
 from django.http import JsonResponse
 from .forms import PeriodoForm, ProgramacionForm
@@ -79,7 +80,7 @@ def programacion_listado(request, pk=False):
     idiomas = Idioma.objects.all()
     programacion = Programacion.objects.filter(periodo=periodo).prefetch_related('aula').prefetch_related('horario__turno').prefetch_related('profesor').prefetch_related('ciclo_idioma__idioma').prefetch_related('ciclo_idioma__nivel_idioma')
     pagina = request.GET.get("pag", 1)
-    pagina_cantidad = request.GET.get('pcantidad', 2)
+    pagina_cantidad = request.GET.get('pcantidad', 25)
     query_idioma = request.GET.get("query_idioma", False)
     if query_idioma:
         programacion = programacion.filter(ciclo_idioma__idioma=query_idioma)
@@ -90,9 +91,14 @@ def programacion_listado(request, pk=False):
 def programacion_crear_modificar(request, pk_idioma=False, pk_periodo=False):
     periodo = get_object_or_404(Periodo, pk=pk_periodo)
     aulas = Aula.objects.all()
+    profesores = Profesor.objects.all()
+    horarios = Horario.objects.all()
     ciclo_idiomas = CicloIdioma.objects.filter(idioma=pk_idioma)
     if request.method == "POST":
         form = ProgramacionForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse("programacion:programacion_listado", kwargs={'pk': pk_periodo}))
     else:
         form = ProgramacionForm()
     return render(request, 'programacion/programacion_crear_modificar.html', locals())

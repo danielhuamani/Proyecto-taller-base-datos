@@ -68,5 +68,8 @@ class Programacion(models.Model):
         verbose_name = "Programacion"
         verbose_name_plural = "Programacions"
 
+    def get_absolute_url(self):
+        return reverse('matricula:matricular', kwargs={'pk': self.pk})
+
     def __str__(self):
         return str(self.ciclo_idioma)

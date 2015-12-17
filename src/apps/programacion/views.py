@@ -32,7 +32,7 @@ def horario_listado(request):
 
 def horario_crear_modificar(request, pk=False):
     turno = get_object_or_404(Turno, pk=pk)
-    HorarioFormSet = modelformset_factory(Horario, extra=1, min_num=1, validate_min=True, can_delete=True, fields=('hora', 'hora_fin', 'id'))
+    HorarioFormSet = modelformset_factory(Horario, extra=0, min_num=1, validate_min=True, can_delete=True, fields=('hora', 'hora_fin', 'id', 'turno'))
     if request.method == "POST":
         horarioFormSet = HorarioFormSet(request.POST, queryset=Horario.objects.filter(turno__pk=pk))
         if horarioFormSet.is_valid():
@@ -51,7 +51,7 @@ def aula_listado(request):
 
 
 def periodo_listado(request):
-    periodos = Periodo.objects.all().order_by("-id")
+    periodos = Periodo.objects.all().order_by("-fecha_final")
     pagina = request.GET.get("pag", 1)
     pagina_cantidad = request.GET.get('pcantidad', 50)
     query_fecha_inicio = request.GET.get("fecha_inicio", "")

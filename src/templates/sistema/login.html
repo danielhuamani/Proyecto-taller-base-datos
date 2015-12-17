@@ -29,15 +29,15 @@
       </div> /.login-logo -->
       <div class="login-box-body">
         <p class="login-box-msg">Iniciar Sesión</p>
-        <form action="#" method="post">
+        <form action="#" method="post" autocomplete="off">
           {% csrf_token %}
           <div class="form-group has-feedback">
-            <input type="text" name="{{form.username.html_name}}" value="" class="form-control" placeholder="Usuario"/>
+            <input type="text" autocomplete="off" name="{{form.username.html_name}}" value="" class="form-control" placeholder="Usuario"/>
             <span class="glyphicon glyphicon glyphicon-user form-control-feedback"></span>
             <p class="input_errores">{{form.username.errors.as_text}}</p>
           </div>
           <div class="form-group has-feedback">
-            <input type="password" name="{{form.password.html_name}}" class="form-control" placeholder="Password"/>
+            <input type="password" autocomplete="off" name="{{form.password.html_name}}" class="form-control" placeholder="Password"/>
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             <p class="input_errores">{{form.password.errors.as_text}}</p>
           </div>

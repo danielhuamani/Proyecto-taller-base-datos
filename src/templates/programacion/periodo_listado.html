@@ -37,9 +37,9 @@
                 <div class="form-group ingresar_periodo {% if not ejecuto_post %}guardar_none{% endif %}">
                     {% csrf_token %}
                     <label for="id_fecha_inicio">Fecha inicio:</label>
-                    <input class="datetimepicker_start" id="id_fecha_inicio" name="form_fecha_inicio" type="text">
+                    <input class="datetimepicker" id="id_fecha_inicio" name="form_fecha_inicio" type="text">
                     <label for="id_fecha_final">Fecha final:</label>
-                    <input class="datetimepicker_end" id="id_fecha_final" name="form_fecha_final" type="text">
+                    <input class="datetimepicker" id="id_fecha_final" name="form_fecha_final" type="text">
                     <p>Campos Obligatorios</p>
                     {{form.errors}}
                     <button class="btn btn-success guardar_periodo"><i class="fa fa-fw fa-save"></i>Guardar</button>
@@ -142,24 +142,24 @@
           timepicker: false,
 		      format:'d-m-Y',
         });
-        $('.datetimepicker_start').datetimepicker({
-          format:'d-m-Y',
-          onShow:function( ct ){
-           this.setOptions({
-            maxDate:jQuery('.datetimepicker_start').val()?jQuery('.datetimepicker_end').val():false
-           })
-          },
-          timepicker:false
-         });
-         $('.datetimepicker_end').datetimepicker({
-          format:'d-m-Y',
-          onShow:function( ct ){
-           this.setOptions({
-            minDate:jQuery('.datetimepicker_start').val()?jQuery('.datetimepicker_end').val():false
-           })
-          },
-          timepicker:false
-         });
+        // $('.datetimepicker_start').datetimepicker({
+        //   format:'d-m-Y',
+        //   onShow:function( ct ){
+        //    this.setOptions({
+        //     maxDate:jQuery('.datetimepicker_start').val()?jQuery('.datetimepicker_end').val():false
+        //    })
+        //   },
+        //   timepicker:false
+        //  });
+        //  $('.datetimepicker_end').datetimepicker({
+        //   format:'d-m-Y',
+        //   onShow:function( ct ){
+        //    this.setOptions({
+        //     minDate:jQuery('.datetimepicker_start').val()?jQuery('.datetimepicker_end').val():false
+        //    })
+        //   },
+        //   timepicker:false
+        //  });
     });
 </script>
 {% endblock javascript %}

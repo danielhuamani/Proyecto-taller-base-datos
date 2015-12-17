@@ -41,7 +41,7 @@ class TipoAlumno(models.Model):
 
 class Alumno(models.Model):
     tipo_alumno = models.ForeignKey(TipoAlumno, related_name='tipo_alumno_alumno')
-    nombres = models.CharField("Nombres", max_length=120)
+    nombres = models.CharField("Nombres y Apellidos", max_length=120)
     apellidos = models.CharField("Apellidos", max_length=120)
     sexo = models.CharField("Sexo", max_length=120, choices=SEXO)
     telefono = models.CharField("Teléfono", max_length=12, blank=True)
@@ -51,10 +51,11 @@ class Alumno(models.Model):
     fecha_agregado = models.DateTimeField("Fecha Registrado", auto_now_add=True)
     email = models.EmailField("Email")
     constancia_tipo_alumno = models.ImageField("Constancia de tipo alumno", upload_to="constancia/")
+    contrasena = models.CharField("Contraseña", max_length=60)
 
     class Meta:
         verbose_name = "Alumno"
         verbose_name_plural = "Alumnos"
 
     def __unicode__(self):
-        return "%s, %s" % (self.nombres, self.appellidos)
+        return "%s, %s" % (self.nombres, self.apellidos)

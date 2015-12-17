@@ -35,7 +35,7 @@
         <nav class="navbar navbar-static-top">
           <div class="container">
             <div class="navbar-header">
-              <a href="{{STATIC_URL}}index2.html" class="navbar-brand">SISTEMA DE MATRICULA</a>
+              <a href="{% url 'matricula:inicio_matricula' %}" class="navbar-brand">SISTEMA DE MATRICULA</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -50,10 +50,9 @@
                   <!-- Tasks Menu -->
 
                   <!-- User Account Menu -->
-                  <li class="dropdown user user-menu">
+                  <li class="">
                     <!-- Menu Toggle Button -->
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                      <!-- The user image in the navbar-->
+                    <a href="{% url 'sistema:login_view' %}" >             <!-- The user image in the navbar-->
 
                       <strong class="hidden-xs">Ingresar</strong>
                     </a>
@@ -75,30 +74,35 @@
 
           <!-- Main content -->
           <section class="content" style="background:white;">
-            <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
-                <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
-                 <thead>
-                  <tr>
-                    <th>N°</th>
-                    <th>Ciclo idioma</th>
-                    <th>Profesor</th>
-                    <th>Aula</th>
-                    <th>Horario</th>
-                  </tr>
-                </thead>
-                  <tbody class="listado_idioma">
-                  {% for programa in periodos.0.periodo_programacion.all %}
-                    <tr role="row" class="odd row-fila" >
-                      <td class="sorting_1">{{forloop.counter}}</td>
-                      <td class="nombre_idioma"><h5>{{programa.ciclo_idioma}}</h5></td>
-                      <td class="nombre_idioma"><h5>{{programa.profesor}}</h5></td>
-                      <td class="nombre_idioma"><h5>{{programa.aula.numero_aula}}</h5></td>
-                      <td class="nombre_idioma"><h5>{{programa.horario}}</h5></td>
-                    </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+            <form action="#" method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+              <input type="hidden" value="{{programacion.pk}}" name="programacion">
+              <input type="hidden" name="alumno">
+              {% for alumno in alumnoform %}
+                <div class="form-group overflow">
+                  <label for="" class="col-sm-3 centrar-label">{{alumno.label}}</label>
+                  <div class="col-sm-7">
+                    {{alumno}}
+                    {{alumno.errors}}
+                  </div>
+                </div>
+              {% endfor %}
+              <div class="form-group overflow">
+                  <label for="" class="col-sm-3 centrar-label">{{matriculaform.recibo.label}}</label>
+                  <div class="col-sm-7s">
+                    {{matriculaform.recibo}}
+                  </div>
+                </div>
+              <div class="form-group overflow">
+                  <label for="" class="col-sm-3 centrar-label">{{matriculaform.observacion.label}}</label>
+                  <div class="col-sm-7s">
+                    <textarea name="observacion" class="form-control" id="" cols="30" rows="10">{% if matriculaform.observacion.value %}{{matriculaform.observacion.value}}{% endif %}</textarea>
+                  </div>
+                </div>
+                {{matriculaform.errors}}
+                {{alumnoform.errors}}
+                <button class="btn btn-success btn-lg"><i class="fa fa-save"></i> Enviar</button>
+            </form>
           </section><!-- /.content -->
         </div><!-- /.container -->
       </div><!-- /.content-wrapper -->

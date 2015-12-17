@@ -35,7 +35,7 @@
         <nav class="navbar navbar-static-top">
           <div class="container">
             <div class="navbar-header">
-              <a href="{{STATIC_URL}}index2.html" class="navbar-brand">SISTEMA DE MATRICULA</a>
+              <a href="{% url 'matricula:inicio_matricula' %}" class="navbar-brand">SISTEMA DE MATRICULA</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -50,10 +50,9 @@
                   <!-- Tasks Menu -->
 
                   <!-- User Account Menu -->
-                  <li class="dropdown user user-menu">
+                  <li class="">
                     <!-- Menu Toggle Button -->
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                      <!-- The user image in the navbar-->
+                    <a href="{% url 'sistema:login_view' %}" >             <!-- The user image in the navbar-->
 
                       <strong class="hidden-xs">Ingresar</strong>
                     </a>

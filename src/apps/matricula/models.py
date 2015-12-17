@@ -5,9 +5,12 @@ from apps.programacion.models import Programacion
 
 
 class Matricula(models.Model):
+    fecha_creacion = models.DateTimeField("fecha_creacion", auto_now_add=True)
     programacion = models.ForeignKey(Programacion, related_name='programacion_matricula')
-    alumno = models.ForeignKey(Alumno, related_name='alumno_matricula')
-    recibo = models.FileField("Recibo", upload_to="recibo")
+    alumno = models.ForeignKey(Alumno, related_name='alumno_matricula', null=True, blank=True)
+    recibo = models.FileField("Recibo de la matricula", upload_to="recibo")
+    observacion = models.TextField("Observacion", blank=True, null=True)
+    estado = models.BooleanField("Estado", default=False)
 
     class Meta:
         verbose_name = "Matricula"

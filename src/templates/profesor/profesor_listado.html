@@ -61,13 +61,13 @@
       	<div id="listado_paginas">
           	<ul>
                 {% if profesores.has_previous %}
-                <li id="anterior"><a href="" data-pagina="{{profesores.previous_page_number}}"><</a></li>
+                <li id="anterior"><a href="" data-pagina="{{profesores.previous_page_number}}"><<</a></li>
                 {% endif %}
                 {% for pagina_link in profesores.paginator.page_range %}
                 <li><a href="?pag={{pagina_link}}" {% if pagina_link|lower == pagina|lower %}class="active"{% endif %} data-pagina="{{pagina_link}}">{{pagina_link}}</a></li>
                 {% endfor %}
                 {% if profesores.has_next %}
-                <li id="siguiente"><a href="" data-pagina="{{profesores.next_page_number}}">></a></li>
+                <li id="siguiente"><a href="" data-pagina="{{profesores.next_page_number}}">>></a></li>
                 {% endif %}
              </ul>
         </div>

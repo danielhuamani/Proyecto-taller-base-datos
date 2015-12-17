@@ -6,7 +6,7 @@
     <div class="box box-primary">
       <div class="box-header">
         <h3 class="box-title">
-            Programación para la fechas: <strong>{{periodo.fecha_inicio}} - {{periodo.fecha_final}}</strong>
+            Periodo > Programación para la fechas: <strong>{{periodo.fecha_inicio}} - {{periodo.fecha_final}}</strong>
         </h3>
       </div>
       <div class="box-body">
@@ -46,7 +46,7 @@
                   {% for programa in programacion %}
                     <tr role="row" class="odd row-fila" >
                       <td class="sorting_1">{{forloop.counter}}</td>
-                      <td class="nombre_idioma"><h5>{{programa.ciclo_idioma}}</h5></td>
+                      <td class="nombre_idioma"><a href="{{programa.get_matricula_detalle_url}}"><h5>{{programa.ciclo_idioma}}</h5></a></td>
                       <td class="nombre_idioma"><h5>{{programa.profesor}}</h5></td>
                       <td class="nombre_idioma"><h5>{{programa.aula.numero_aula}}</h5></td>
                       <td class="nombre_idioma"><h5>{{programa.horario}}</h5></td>

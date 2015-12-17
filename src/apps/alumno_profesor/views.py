@@ -4,7 +4,7 @@ from django.db.models import Q
 from .forms import ProfesorForm
 from apps.programacion.models import Periodo
 from apps.common.util import paginador_general
-from .models import Profesor
+from .models import Profesor, Alumno
 # Create your views here.
 
 
@@ -34,3 +34,15 @@ def profesor_crear_modificar(request, pk=False):
         form = ProfesorForm(instance=profesor)
 
     return render(request, "profesor/profesor_crear_modificar.html", locals())
+
+
+def alumno_listado(request):
+    alumnos = Alumno.objects.all().order_by("nombres")
+    pagina = request.GET.get("pag", 1)
+    pagina_cantidad = request.GET.get('pcantidad', 25)
+    alumnos = paginador_general(alumnos, pagina_cantidad, pagina)
+    return render(request, "profesor/alumno_listado.html", locals())
+
+
+def alumno_detalle(request, pk=False):
+    return render(request, "profesor/alumno_listado.html", locals())

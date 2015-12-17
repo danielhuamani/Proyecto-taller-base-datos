@@ -2,6 +2,7 @@
 {% block css %}
 
 <link href="{{STATIC_URL}}css/jquery.timepicker.css" rel="stylesheet" type="text/css" />
+<link href="{{STATIC_URL}}css/jquery.datetimepicker.css" rel="stylesheet" type="text/css" />
 {% endblock css %}
 {% block content %}
 
@@ -18,6 +19,7 @@
 				{% csrf_token %}
 				{% for horario in horarioFormSet %}
 					<div class="form-group form-horario">
+                        <input type="hidden" name="{{horario.turno.html_name}}" value="{{turno.pk}}">
 						<label for="">Horario Inicio:</label>
 						<input class="timepicker" id="" name="{{horario.hora.html_name}}" type="text" {% if horario.hora.value %}value="{{horario.hora.value}}"{% endif %}>
 						<label for="">Horario FIn:</label>
@@ -38,7 +40,7 @@
 </div>
 {% endblock content %}
 {% block javascript %}
-<script src="{{STATIC_URL}}js/jquery.timepicker.js"></script>
+<script src="{{STATIC_URL}}js/jquery.datetimepicker.js"></script>
 <script src="{{STATIC_URL}}js/jquery_formset.js"></script>
 <script src="{{STATIC_URL}}js/moment.js"></script>
 <script>
@@ -51,8 +53,9 @@
             addText: 'Agregar',
             addCssClass: 'btn btn-success'
         });
-        $('input.timepicker').timepicker({
-
+        $('input.timepicker').datetimepicker({
+            datepicker:false,
+            format:'H:i'
         });
     });
 

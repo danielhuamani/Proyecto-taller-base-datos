@@ -41,7 +41,7 @@ class TipoAlumno(models.Model):
 
 class Alumno(models.Model):
     tipo_alumno = models.ForeignKey(TipoAlumno, related_name='tipo_alumno_alumno')
-    nombres = models.CharField("Nombres y Apellidos", max_length=120)
+    nombres = models.CharField("Nombres", max_length=120)
     apellidos = models.CharField("Apellidos", max_length=120)
     sexo = models.CharField("Sexo", max_length=120, choices=SEXO)
     telefono = models.CharField("Teléfono", max_length=12, blank=True)

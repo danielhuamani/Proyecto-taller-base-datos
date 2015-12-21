@@ -47,11 +47,12 @@ class Alumno(models.Model):
     telefono = models.CharField("Teléfono", max_length=12, blank=True)
     direccion = models.CharField("Dirección", max_length=120, blank=True)
     codigo_alumno = models.CharField("Codigo CIUNAC", max_length=12, blank=True)
-    estado = models.BooleanField("Estado", default=True)
+    is_active = models.BooleanField("Estado", default=True)
     fecha_agregado = models.DateTimeField("Fecha Registrado", auto_now_add=True)
     email = models.EmailField("Email")
     constancia_tipo_alumno = models.ImageField("Constancia de tipo alumno", upload_to="constancia/")
     contrasena = models.CharField("Contraseña", max_length=60)
+    last_login = models.DateTimeField('Último Login', blank=True, null=True)
 
     class Meta:
         verbose_name = "Alumno"
@@ -59,3 +60,14 @@ class Alumno(models.Model):
 
     def __unicode__(self):
         return "%s, %s" % (self.nombres, self.apellidos)
+
+    def is_authenticated(self):
+        return True
+
+    @property
+    def is_staff(self):
+        return False
+
+    @property
+    def is_sistema(self):
+        return False

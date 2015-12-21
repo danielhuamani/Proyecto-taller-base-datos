@@ -30,22 +30,19 @@
              <thead>
               <tr>
                 <th>N°</th>
-                <th>Nombres</th>
-                <th>Apellidos</th>
-                <th>codigo alumno</th>
-                <th>Email</th>
+                <th>Programación</th>
+                <th>Recibo</th>
                 <th>Estado</th>
+
               </tr>
             </thead>
               <tbody class="listado_idioma">
-              {% for alumno in alumnos %}
+              {% for matricula in matriculas %}
                 <tr role="row" class="odd row-fila" >
                   <td class="sorting_1">{{forloop.counter}}</td>
-                  <td class="nombre_idioma"><a href="{{alumno.get_absolute_url}}">{{alumno.nombres}}</a></td>
-                  <td>{{alumno.apellidos}}</td>
-                  <td>{{alumno.codigo_alumno}}</td>
-                  <td>{{alumno.email}}</td>
-                  <td>{% if alumno.is_active %}
+                  <td class="nombre_idioma"><a href="{{matricula.get_absolute_url}}">{{matricula.programacion}}</a></td>
+                  <td>{{matricula.recibo.numero_recibo}}</td>
+                  <td>{% if matricula.estado %}
                   	Activo
                   	{% else %}
                   	Deshabilitado

@@ -50,6 +50,10 @@ class Usuario(models.Model):
         return True
 
     @property
+    def is_sistema(self):
+        return True
+
+    @property
     def is_staff(self):
         return False
 

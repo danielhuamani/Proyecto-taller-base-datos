@@ -50,8 +50,6 @@
                   <!-- Tasks Menu -->
 
                   <!-- User Account Menu -->
-                  {% if not request.user.is_authenticated %}
-
                   <li class="">
                     <!-- Menu Toggle Button -->
                     <a href="{% url 'sistema:login_view' %}" >             <!-- The user image in the navbar-->
@@ -60,29 +58,6 @@
                     </a>
 
                   </li>
-                  <li class="">
-                    <!-- Menu Toggle Button -->
-                    <a href="{% url 'alumno_profesor:alumno_crear' %}" >             <!-- The user image in the navbar-->
-
-                      <strong class="hidden-xs">Registrar</strong>
-                    </a>
-
-                  </li>
-                  {% else %}
-                    <li class="">
-                    <!-- Menu Toggle Button -->
-                      <a href="{% url 'sistema:bienvenido' %}" >             <!-- The user image in the navbar-->
-
-                        <strong class="hidden-xs">{{request.user.email}}</strong>
-                      </a>
-
-                    </li>
-                    <li class="">
-                    <!-- Menu Toggle Button -->
-                    <a href="{% url 'sistema:salir' %}" class="hidden-xs">
-                    <strong class="hidden-xs">Salir</strong>
-                    </a>
-                  {% endif %}
                 </ul>
               </div><!-- /.navbar-custom-menu -->
           </div><!-- /.container-fluid -->
@@ -94,7 +69,7 @@
           <!-- Content Header (Page header) -->
           <section class="content-header mb_20">
             <h3>
-              MATRICULA para {{programacion}}
+              Registrar Alumno
           </section>
 
           <!-- Main content -->
@@ -103,22 +78,17 @@
               {% csrf_token %}
               <input type="hidden" value="{{programacion.pk}}" name="programacion">
               <input type="hidden" name="alumno">
+              {% for alumno in form %}
+                <div class="form-group overflow">
+                  <label for="" class="col-sm-3 centrar-label">{{alumno.label}}</label>
+                  <div class="col-sm-7">
+                    {{alumno}}
+                    {{alumno.errors}}
+                  </div>
+                </div>
+              {% endfor %}
 
-              <div class="form-group overflow">
-                  <label for="" class="col-sm-3 centrar-label">{{matriculaform.recibo.label}}</label>
-                  <div class="col-sm-7s">
-                    {{matriculaform.recibo}}
-                  </div>
-                </div>
-              <div class="form-group overflow">
-                  <label for="" class="col-sm-3 centrar-label">{{matriculaform.observacion.label}}</label>
-                  <div class="col-sm-7s">
-                    <textarea name="observacion" class="form-control" id="" cols="30" rows="10">{% if matriculaform.observacion.value %}{{matriculaform.observacion.value}}{% endif %}</textarea>
-                  </div>
-                </div>
-                {{matriculaform.errors}}
-                {{alumnoform.errors}}
-                <button class="btn btn-success btn-lg"><i class="fa fa-save"></i> Enviar</button>
+                <button class="btn btn-success btn-lg"><i class="fa fa-save"></i> Guardar</button>
             </form>
           </section><!-- /.content -->
         </div><!-- /.container -->

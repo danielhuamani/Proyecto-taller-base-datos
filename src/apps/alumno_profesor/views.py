@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.urlresolvers import reverse
 from django.db.models import Q
-from .forms import ProfesorForm
+from .forms import ProfesorForm, AlumnoForm
 from apps.programacion.models import Periodo
 from apps.common.util import paginador_general
 from .models import Profesor, Alumno
@@ -46,3 +46,14 @@ def alumno_listado(request):
 
 def alumno_detalle(request, pk=False):
     return render(request, "profesor/alumno_listado.html", locals())
+
+
+def alumno_crear_modificar(request, pk=False):
+    if request.method == "POST":
+        form = AlumnoForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse("sistema:login_view"))
+    else:
+        form = AlumnoForm()
+    return render(request, "profesor/alumno_crear_modificar.html", locals())

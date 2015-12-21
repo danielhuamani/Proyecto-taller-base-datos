@@ -1,7 +1,7 @@
 {% extends 'common/base.html' %}
 {% block css %}
 <link href="{{STATIC_URL}}css/jquery.datetimepicker.css" rel="stylesheet" type="text/css" />
-
+<link rel="stylesheet" href="{{STATIC_URL}}plugins/iCheck/all.css">
 {% endblock css %}
 {% block content %}
 
@@ -55,6 +55,7 @@
                 <a href="{{matricula.alumno.constancia_tipo_alumno.url}}" target="_blank">{{matricula.alumno.constancia_tipo_alumno}}</a>
               </div>
             </div>
+
             <div class="form-group overflow">
               <label for="" class="col-md-2 centrar-label">Telefono</label>
               <div class="col-md-3">
@@ -83,6 +84,12 @@
             </div>
             <form action="#" method="POST">
               {% csrf_token %}
+              <div class="form-group overflow">
+                <label for="" class="col-md-2 centrar-label">Estado de Alumno</label>
+                <label for="">
+                  <input type="checkbox" class="flat-red" name="estado_alumno" {% if matricula.alumno.is_active %}checked="checked"{% endif %}>
+                </label>
+              </div>
               <input type="hidden" name="{{form.matricula.html_name}}" value="{{matricula.id}}">
               <div class="form-group overflow">
               <label for="" class="col-md-2 centrar-label">Numero de Recibo</label>
@@ -113,6 +120,7 @@
 <script src="{{STATIC_URL}}js/common.js"></script>
 <script src="{{STATIC_URL}}js/cookies.js"></script>
 <script src="{{STATIC_URL}}js/jquery.datetimepicker.js"></script>
+<script src="{{STATIC_URL}}plugins/iCheck/icheck.min.js"></script>
 <script>
   $(document).ready(function() {
     $("#validar-recibo").click(function(event) {
@@ -134,6 +142,11 @@
         $(".texto_valido a").remove()
         $(".texto_valido").append(html)
       })
+        //Flat red color scheme for iCheck
+        $('.flat-red').iCheck({
+          checkboxClass: 'icheckbox_flat-green',
+          radioClass: 'iradio_flat-green'
+        });
 
 
     });

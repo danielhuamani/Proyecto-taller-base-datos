@@ -11,4 +11,10 @@ class ProfesorForm(forms.ModelForm):
 class AlumnoForm(forms.ModelForm):
     class Meta:
         model = Alumno
-        fields = ('nombres', 'apellidos', 'tipo_alumno', 'constancia_tipo_alumno', 'sexo', 'telefono', 'direccion', 'email')
+        fields = ('nombres', 'apellidos', 'tipo_alumno', 'constancia_tipo_alumno', 'sexo', 'telefono', 'direccion', 'email', 'contrasena')
+
+
+class AlumnoDetalleForm(forms.ModelForm):
+    class Meta:
+        model = Alumno
+        fields = ('nombres', 'apellidos', 'tipo_alumno', 'constancia_tipo_alumno', 'sexo', 'telefono', 'direccion', 'email', 'is_active')

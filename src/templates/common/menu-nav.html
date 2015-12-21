@@ -28,6 +28,7 @@
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
             <li class="header">Menu Principal</li>
+            {% if request.user.is_sistema %}
 
             <li class="treeview">
               <a href="#">
@@ -51,7 +52,7 @@
                 </li>
                 <li class="active"><a href="{% url 'programacion:aula_listado' %}"><i class="fa fa-files-o"></i>Aula</a>
                 </li>
-                <li class="active"><a href="{% url 'programacion:periodo_listado' %}"><i class="fa fa-files-o"></i>periodo para la programacion</a>
+                <li class="active"><a href="{% url 'programacion:periodo_listado' %}">cperiodo para la programacion</a>
                 </li>
               </ul>
             </li>
@@ -65,7 +66,18 @@
                 </li>
               </ul>
             </li>
-
+            {% else %}
+            <li class="treeview">
+              <a href="#">
+                <i class="glyphicon glyphicon-list-alt"></i> <span>Matricula</span> <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{% url 'matricula:inicio_matricula' %}"><i class="fa fa-files-o"></i>Ver Matricula Actual</a></li>
+                <li class="active"><a href="{% url 'matricula:mi_matricula_listado' %}"><i class="fa fa-files-o"></i></i>Mis Matriculas</a>
+                </li>
+              </ul>
+            </li>
+            {% endif %}
           </ul>
         </section>
         <!-- /.sidebar -->

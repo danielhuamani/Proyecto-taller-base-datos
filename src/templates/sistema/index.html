@@ -50,6 +50,8 @@
                   <!-- Tasks Menu -->
 
                   <!-- User Account Menu -->
+                  {% if not request.user.is_authenticated %}
+
                   <li class="">
                     <!-- Menu Toggle Button -->
                     <a href="{% url 'sistema:login_view' %}" >             <!-- The user image in the navbar-->
@@ -58,6 +60,34 @@
                     </a>
 
                   </li>
+                  <li class="">
+                    <!-- Menu Toggle Button -->
+                    <a href="{% url 'alumno_profesor:alumno_crear' %}" >             <!-- The user image in the navbar-->
+
+                      <strong class="hidden-xs">Registrar</strong>
+                    </a>
+
+                  </li>
+                  {% else %}
+
+                    <li class="">
+                    <!-- Menu Toggle Button -->
+                      <a href="{% url 'alumno_profesor:alumno_crear' %}" >             <!-- The user image in the navbar-->
+
+                        <strong class="hidden-xs">{{request.user.email}}</strong>
+                      </a>
+
+                    </li>
+                    <li class="">
+                    <!-- Menu Toggle Button -->
+                    <a href="{% url 'sistema:salir' %}" class="hidden-xs">
+                    <strong class="hidden-xs">Salir</strong>
+                    </a>          <!-- The user image in the navbar-->
+
+
+
+                  </li>
+                  {% endif %}
                 </ul>
               </div><!-- /.navbar-custom-menu -->
           </div><!-- /.container-fluid -->

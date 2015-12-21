@@ -83,6 +83,7 @@ WSGI_APPLICATION = 'wsgi.application'
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'apps.sistema.backend.AuthBackend',
+    'apps.alumno_profesor.backend.AuthBackend',
 )
 
 # Internationalization

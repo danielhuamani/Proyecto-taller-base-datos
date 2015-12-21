@@ -24,15 +24,15 @@ class LoginForm(forms.Form):
         max_length=32, widget=forms.PasswordInput)
     password.widget.attrs.update({'tabindex': '2'})
 
-    def clean_username(self):
-        username = self.cleaned_data['username']
-        try:
-            Usuario.objects.get(email=username)
-        except Usuario.DoesNotExist:
-            mensaje = u'El email no ha sido registrado'
-            raise forms.ValidationError(mensaje)
+    # def clean_username(self):
+    #     username = self.cleaned_data['username']
+    #     try:
+    #         Usuario.objects.get(email=username)
+    #     except Usuario.DoesNotExist:
+    #         mensaje = u'El email no ha sido registrado'
+    #         raise forms.ValidationError(mensaje)
 
-        return username
+    #     return username
 
     def auth(self):
         cd = self.cleaned_data

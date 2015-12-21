@@ -20,6 +20,9 @@ class Matricula(models.Model):
     def get_absolute_url(self):
         return reverse('matricula:matricula_alumno_detalle', kwargs={'pk': self.pk})
 
+    def get_valida_url(self):
+        return reverse('matricula:matricula_valida', kwargs={'pk': self.pk})
+
     def __str__(self):
         return '%s - %s' % (self.alumno, self.programacion)
 

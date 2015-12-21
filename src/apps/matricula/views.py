@@ -9,6 +9,7 @@ from .models import Matricula, Recibo
 from .forms import ReciboForm
 from django.http import JsonResponse
 import json
+from .htmltopdf import render_to_pdf
 # Create your views here.
 
 
@@ -94,6 +95,20 @@ def api_validar_matricula(request):
 
 def mi_matricula_listado(request):
     alumno = request.user
-    matriculas = Matricula.objects.filter(alumno=alumno).order_by("fecha_creacion")
-    print matriculas
+    matriculas = Matricula.objects.filter(alumno=alumno).order_by("fecha_creacion").prefetch_related('programacion').prefetch_related('programacion__ciclo_idioma').prefetch_related('programacion__ciclo_idioma__nivel_idioma').prefetch_related('programacion__ciclo_idioma__idioma').prefetch_related('programacion__aula').prefetch_related('programacion__profesor').prefetch_related('programacion__horario').prefetch_related('matricula_recibo')
     return render(request, "matricula/mi_matricula_listado.html", locals())
+
+
+def matricula_valida(request, pk=False):
+    matricula = get_object_or_404(Matricula, pk=pk)
+    return render(request, "matricula/matricula_valida.html", locals())
+
+
+def matricula_generar_pdf(request, pk=False):
+    matricula = get_object_or_404(Matricula, pk=pk)
+    dic = {
+        'programacion': matricula.programacion,
+        'alumno': matricula.alumno,
+        'recibo': matricula.matricula_recibo
+    }
+    return render_to_pdf('matricula/matricula_pdf.html', dic)

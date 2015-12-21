@@ -30,7 +30,10 @@
              <thead>
               <tr>
                 <th>N°</th>
-                <th>Programación</th>
+                <th>Idioma</th>
+                <th>aula</th>
+                <th>profesor</th>
+                <th>horario</th>
                 <th>Recibo</th>
                 <th>Estado</th>
 
@@ -40,8 +43,11 @@
               {% for matricula in matriculas %}
                 <tr role="row" class="odd row-fila" >
                   <td class="sorting_1">{{forloop.counter}}</td>
-                  <td class="nombre_idioma"><a href="{{matricula.get_absolute_url}}">{{matricula.programacion}}</a></td>
-                  <td>{{matricula.recibo.numero_recibo}}</td>
+                  <td class="nombre_idioma"><a href="{{matricula.get_valida_url}}">{{matricula.programacion}}</a></td>
+                  <td class="">{{matricula.programacion.aula}}</td>
+                  <td class="">{{matricula.programacion.profesor}}</td>
+                  <td class="">{{matricula.programacion.horario}}</td>
+                  <td>{{matricula.matricula_recibo}}</td>
                   <td>{% if matricula.estado %}
                   	Activo
                   	{% else %}

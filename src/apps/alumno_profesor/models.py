@@ -61,6 +61,9 @@ class Alumno(models.Model):
     def __unicode__(self):
         return "%s, %s" % (self.nombres, self.apellidos)
 
+    def get_absolute_url(self):
+        return reverse('alumno_profesor:alumno_detalle', kwargs={'pk': self.pk})
+
     def is_authenticated(self):
         return True
 

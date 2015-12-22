@@ -11,7 +11,7 @@ from .models import Profesor, Alumno
 def profesor_listado(request):
     profesores = Profesor.objects.all()
     pagina = request.GET.get("pag", 1)
-    pagina_cantidad = request.GET.get('pcantidad', 2)
+    pagina_cantidad = request.GET.get('pcantidad', 25)
     if request.GET.get("buscar"):
         buscar = request.GET.get("buscar")
         profesores = profesores.filter(Q(email__icontains=buscar) | Q(nombres__icontains=buscar) | Q(apellidos__icontains=buscar) | Q(codigo_profesor__icontains=buscar))
@@ -45,7 +45,8 @@ def alumno_listado(request):
 
 
 def alumno_detalle(request, pk=False):
-    return render(request, "profesor/alumno_listado.html", locals())
+    alumno = get_object_or_404(Alumno, pk=pk)
+    return render(request, "profesor/alumno_detalle.html", locals())
 
 
 def alumno_crear_modificar(request, pk=False):

@@ -22,7 +22,7 @@ def horario_listado(request):
     turnos = Turno.objects.all().order_by('nombre')
     horarios = Horario.objects.all().prefetch_related("turno")
     pagina = request.GET.get("pag", 1)
-    pagina_cantidad = request.GET.get('pcantidad', 2)
+    pagina_cantidad = request.GET.get('pcantidad', 25)
     query_turno = request.GET.get("horario_seleccionar", False)
     if query_turno:
         horarios = horarios.filter(turno__pk=query_turno)
